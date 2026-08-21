@@ -1,26 +1,1484 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(142, 237, 230, 0.34),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 16% 52%,
+      rgba(222, 214, 255, 0.20),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 78% 78%,
+      rgba(205, 238, 236, 0.20),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f8fcfd 42%,
+      #f1fafb 72%,
+      #edf8f8 100%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #10233f;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+main {
+  overflow-x: clip;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+  position: sticky;
+  top: 14px;
+  z-index: 1000;
+
+  width: 92%;
+  height: 72px;
+
+  margin: 18px auto 0;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 10px 35px rgba(20, 70, 90, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #10233f;
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.logo > span > span {
+  color: #12999b;
+}
+
+.logo-icon {
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #109c9d;
+
+  background: rgba(228, 249, 248, 0.85);
+
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+/* =========================================
+   NAVIGATION LINKS
+========================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.nav-links a {
+  position: relative;
+
+  text-decoration: none;
+
+  color: #53657b;
+
+  font-size: 14px;
+  font-weight: 550;
+
+  transition: 0.25s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #079394;
+}
+
+
+
+/* =========================================
+   NAVBAR BUTTONS
+   THESE STAY
+========================================= */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-links a.active {
+  color: #159a9c;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* LOGIN */
+
+.login-btn {
+  padding: 11px 20px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(205, 220, 228, 0.8);
+
+  background: rgba(255, 255, 255, 0.55);
+
+  color: #10233f;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  transition: 0.25s ease;
+}
+
+.login-btn:hover {
+  background: white;
+  transform: translateY(-1px);
+}
+
+/* NAVBAR GET STARTED */
+
+.primary-btn {
+  padding: 13px 22px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  background: linear-gradient(
+    135deg,
+    #16a6a5,
+    #078e91
+  );
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 25px rgba(9, 148, 149, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+
+  transition: 0.25s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  position: relative;
+
+  min-height: calc(100vh - 90px);
+
+  padding: 93px 7% 55px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 0.88fr;
+
+  align-items: center;
+
+  gap: 70px;
+
+  background: transparent;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 690px;
+}
+
+.hero-badge {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 24px;
+
+  padding: 9px 15px;
+
+  border-radius: 30px;
+
+  color: #087f82;
+
+  background: rgba(234, 251, 250, 0.72);
+
+  border: 1px solid rgba(135, 218, 216, 0.35);
+
+  backdrop-filter: blur(10px);
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.hero-badge span {
+  font-size: 15px;
+}
+
+.hero h1 {
+  color: #10233f;
+
+  font-size: clamp(48px, 5.3vw, 76px);
+
+  line-height: 1.02;
+
+  letter-spacing: -3.5px;
+
+  font-weight: 720;
+
+  margin-bottom: 27px;
+}
+
+.hero h1 span {
+  color: #11999b;
+}
+
+.hero-description {
+  max-width: 650px;
+
+  color: #61738b;
+
+  font-size: 17px;
+
+  line-height: 1.8;
+
+  margin-bottom: 18px;
+}
+
+/* =========================================
+   IMPORTANT:
+   REMOVE HERO BUTTONS
+   KEEP NAVBAR BUTTONS
+========================================= */
+
+.hero .hero-buttons,
+.hero .hero-actions,
+.hero-content .secondary-btn {
+  display: none !important;
+}
+
+/*
+   If an old version of the hero contains
+   buttons directly inside hero-content,
+   hide them.
+
+   Navbar buttons are NOT affected.
+*/
+
+.hero-content > button {
+  display: none !important;
+}
+
+/* =========================================
+   TRUST CARD
+========================================= */
+
+.trust-card {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 19px;
+
+  padding: 14px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  border-radius: 17px;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 12px 35px rgba(37, 85, 100, 0.07),
+    inset 0 1px 0 white;
+
+  margin-top: 4px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.trust-icon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  color: #0d9a9a;
+
+  background: rgba(224, 248, 247, 0.9);
+
+  font-size: 13px;
+}
+
+.trust-item strong {
+  display: block;
+
+  color: #253b55;
+
+  font-size: 11px;
+
+  margin-bottom: 2px;
+}
+
+.trust-item p {
+  color: #8291a3;
+
+  font-size: 9px;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 32px;
+
+  background: #dce8ed;
+}
+
+/* =========================================
+   RIGHT HERO AREA
+========================================= */
+
+.hero-visual {
+  position: relative;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  isolation: isolate;
+}
+
+/* =========================================
+   REMOVE UNWANTED FLOATING PLUS
+========================================= */
+
+/*
+   These remove decorative pseudo-elements
+   around the hero.
+
+   IMPORTANT:
+   The + INSIDE Medicine Information is NOT
+   affected because that is .service-icon.
+*/
+
+.hero::before,
+.hero::after,
+.hero-content::before,
+.hero-content::after,
+.hero-visual::before,
+.hero-visual::after,
+.health-preview::before,
+.health-preview::after {
+  content: none !important;
+  display: none !important;
+}
+
+/*
+   Hide common floating decoration classes.
+*/
+
+.floating-plus,
+.floating-icon,
+.floating-dot,
+.decorative-plus,
+.decorative-dot {
+  display: none !important;
+}
+
+/*
+   Hide extra direct children of hero-visual,
+   but KEEP the actual health-preview card.
+*/
+
+.hero-visual > *:not(.health-preview) {
+  display: none !important;
+}
+
+/* =========================================
+   HEALTH PREVIEW CARD
+========================================= */
+
+
+
+.health-preview {
+  position: relative;
+  z-index: 3;
+
+  width: 100%;
+  max-width: 520px;
+
+  /* Keep the same width, reduce vertical size */
+  padding: 22px;
+
+  border-radius: 27px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.75),
+      rgba(235, 249, 250, 0.52)
+    );
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 30px 80px rgba(35, 95, 110, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+
+/* HEADER */
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: 15px;
+
+  border-bottom: 1px solid rgba(205, 224, 230, 0.7);
+}
+
+.preview-label {
+  color: #079394;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.preview-header h2 {
+  color: #122740;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.preview-subtitle {
+  color: #73869a;
+  font-size: 11px;
+}
+
+
+/* HEART */
+
+.heart-button {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: #10a3a2;
+  background: rgba(225, 249, 247, 0.78);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 10px 25px rgba(12, 151, 151, 0.08),
+    inset 0 1px 1px white;
+
+  font-size: 18px;
+}
+
+
+/* SERVICE LIST */
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  margin-top: 12px;
+}
+
+
+/* SERVICE ROW */
+
+.service-item {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 6px 12px;
+
+  min-height: 40px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(220, 232, 237, 0.7);
+
+  background: rgba(255, 255, 255, 0.54);
+
+  backdrop-filter: blur(12px);
+
+  transition: 0.25s ease;
+}
+
+
+/* ICON */
+
+.service-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+/* TEXT */
+
+.service-content {
+  flex: 1;
+}
+
+.service-content h3 {
+  color: #263a54;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  margin-bottom: 2px;
+}
+
+.service-content p {
+  color: #8291a2;
+
+  font-size: 9px;
+}
+
+
+/* ARROW */
+
+.arrow {
+  color: #8495a6;
+  font-size: 16px;
+}
+
+/* =========================================
+   PREVIEW HEADER
+========================================= */
+
+.preview-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: 21px;
+
+  border-bottom: 1px solid rgba(205, 224, 230, 0.7);
+}
+
+.preview-label {
+  color: #079394;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 6px;
+}
+
+.preview-header h2 {
+  color: #122740;
+
+  font-size: 23px;
+
+  letter-spacing: -0.5px;
+
+  margin-bottom: 6px;
+}
+
+.preview-subtitle {
+  color: #73869a;
+
+  font-size: 12px;
+}
+
+.heart-button {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  color: #10a3a2;
+
+  background: rgba(225, 249, 247, 0.78);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 10px 25px rgba(12, 151, 151, 0.08),
+    inset 0 1px 1px white;
+
+  font-size: 20px;
+}
+
+/* =========================================
+   SERVICE LIST
+========================================= */
+
+.service-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: 19px;
+}
+
+.service-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 12px 13px;
+
+  border-radius: 15px;
+
+  border: 1px solid rgba(220, 232, 237, 0.7);
+
+  background: rgba(255, 255, 255, 0.54);
+
+  backdrop-filter: blur(12px);
+
+  transition: 0.25s ease;
+}
+
+.service-item:hover {
+  transform: translateX(4px);
+
+  background: rgba(255, 255, 255, 0.84);
+
+  border-color: rgba(130, 202, 202, 0.5);
+
+  box-shadow:
+    0 10px 25px rgba(30, 100, 110, 0.06);
+}
+
+/* =========================================
+   SERVICE ICONS
+========================================= */
+
+.service-icon {
+  width: 39px;
+  height: 39px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.medicine {
+  color: #2778d1;
+  background: #edf5ff;
+}
+
+.prescription {
+  color: #7958d0;
+  background: #f2edff;
+}
+
+.reminder {
+  color: #d58b27;
+  background: #fff6e6;
+}
+
+.healthcare {
+  color: #21966f;
+  background: #eaf8f3;
+}
+
+.blood {
+  color: #d24e59;
+  background: #fff0f1;
+}
+
+.emergency-icon {
+  color: #d65353;
+  background: #ffeaea;
+}
+
+.service-content {
+  flex: 1;
+}
+
+.service-content h3 {
+  color: #263a54;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  margin-bottom: 3px;
+}
+
+.service-content p {
+  color: #8291a2;
+
+  font-size: 10px;
+}
+
+.arrow {
+  color: #8495a6;
+
+  font-size: 17px;
+
+  transition: 0.2s ease;
+}
+
+.service-item:hover .arrow {
+  color: #10999a;
+
+  transform: translateX(3px);
+}
+
+.service-item.emergency {
+  background: rgba(255, 246, 246, 0.7);
+
+  border-color: rgba(242, 204, 204, 0.7);
+}
+
+/* =========================================
+   FEATURES SECTION
+========================================= */
+
+.features-section {
+  padding: 120px 7%;
+
+  background: transparent;
+}
+
+.section-heading {
+  max-width: 700px;
+
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.section-badge {
+  display: inline-block;
+
+  color: #079394;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 13px;
+}
+
+.section-heading h2 {
+  color: #10233f;
+
+  font-size: clamp(34px, 4vw, 50px);
+
+  line-height: 1.1;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 16px;
+}
+
+.section-heading h2 span {
+  color: #12999a;
+}
+
+.section-heading > p {
+  color: #708198;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.feature-grid {
+  max-width: 1200px;
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+.feature-card {
+  padding: 28px;
+
+  border-radius: 20px;
+
+  border: 1px solid #e5edf1;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fbfc
+    );
+
+  transition: 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 20px 45px rgba(35, 90, 105, 0.09);
+
+  border-color: #cde4e6;
+}
+
+.feature-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  margin-bottom: 20px;
+}
+
+.medicine-bg {
+  color: #2778d1;
+  background: #edf5ff;
+}
+
+.purple-bg {
+  color: #7958d0;
+  background: #f2edff;
+}
+
+.orange-bg {
+  color: #d58b27;
+  background: #fff6e6;
+}
+
+.green-bg {
+  color: #21966f;
+  background: #eaf8f3;
+}
+
+.red-bg {
+  color: #d24e59;
+  background: #fff0f1;
+}
+
+.emergency-bg {
+  color: #d65353;
+  background: #ffeaea;
+}
+
+.feature-card h3 {
+  color: #1c334f;
+
+  font-size: 16px;
+
+  margin-bottom: 9px;
+}
+
+.feature-card p {
+  color: #7b8a9c;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   HOW IT WORKS
+========================================= */
+
+.how-section {
+  padding: 120px 7%;
+
+  background: transparent;
+}
+
+.steps {
+  max-width: 1050px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.step {
+  width: 280px;
+
+  text-align: center;
+}
+
+.step-number {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 17px;
+
+  border-radius: 18px;
+
+  color: #0b9697;
+
+  background: white;
+
+  border: 1px solid #dcecee;
+
+  box-shadow:
+    0 10px 25px rgba(30, 110, 120, 0.08);
+
+  font-weight: 800;
+}
+
+.step h3 {
+  color: #203751;
+
+  font-size: 16px;
+
+  margin-bottom: 8px;
+}
+
+.step p {
+  color: #7c8c9d;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.step-line {
+  width: 90px;
+  height: 1px;
+
+  background: #cde2e5;
+
+  margin-bottom: 75px;
+}
+
+/* =========================================
+   ABOUT
+========================================= */
+
+.about-section {
+  padding: 110px 7%;
+
+  background: transparent;
+}
+
+.about-card {
+  max-width: 1150px;
+
+  margin: auto;
+
+  padding: 55px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 60px;
+
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(133, 225, 221, 0.28),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f1fbfb,
+      #f9fcfd
+    );
+
+  border: 1px solid #dfeef0;
+}
+
+.about-card h2 {
+  color: #142a44;
+
+  font-size: 40px;
+
+  line-height: 1.1;
+
+  letter-spacing: -1.5px;
+
+  margin-bottom: 18px;
+}
+
+.about-card h2 span {
+  color: #12999a;
+}
+
+.about-card p {
+  max-width: 650px;
+
+  color: #718297;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+.about-stat {
+  min-width: 200px;
+
+  padding: 28px;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  border: 1px solid white;
+
+  box-shadow:
+    0 15px 35px rgba(30, 100, 110, 0.07);
+}
+
+.about-stat strong {
+  display: block;
+
+  color: #109a9a;
+
+  font-size: 45px;
+
+  margin-bottom: 7px;
+}
+
+.about-stat span {
+  color: #65778c;
+
+  font-size: 12px;
+}
+
+/* =========================================
+   DISCLAIMER
+========================================= */
+
+.disclaimer {
+  max-width: 1050px;
+
+  margin: 0 auto 70px;
+
+  padding: 20px 24px;
+
+  border-radius: 15px;
+
+  background: #fff9f5;
+
+  border: 1px solid #f2e2d6;
+
+  text-align: center;
+}
+
+.disclaimer strong {
+  display: block;
+
+  color: #8e6046;
+
+  font-size: 12px;
+
+  margin-bottom: 6px;
+}
+
+.disclaimer p {
+  color: #987d6e;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+  padding: 35px 7%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid #e7eef1;
+
+  background: transparent;
+}
+
+.footer-logo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #172d48;
+
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.footer-logo span span {
+  color: #10999a;
+}
+
+.footer-logo .logo-icon {
+  width: 32px;
+  height: 32px;
+
+  font-size: 14px;
+}
+
+footer > p {
+  color: #8190a0;
+
+  font-size: 11px;
+}
+
+.copyright {
+  color: #9aa6b3;
+
+  font-size: 10px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+  .hero {
+    grid-template-columns: 1fr;
+
+    text-align: center;
+
+    padding-top: 60px;
+  }
+
+  .hero-content {
+    margin: auto;
+  }
+
+  .hero-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .trust-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-visual {
+    max-width: 600px;
+
+    width: 100%;
+
+    margin: 20px auto 0;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .navbar {
+    width: 94%;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+
+    letter-spacing: -2px;
+  }
+
+  .trust-card {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .trust-divider {
+    display: none;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    flex-direction: column;
+
+    gap: 30px;
+  }
+
+  .step-line {
+    width: 1px;
+
+    height: 40px;
+
+    margin: 0;
+  }
+
+  .about-card {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 35px;
+  }
+
+  footer {
+    flex-direction: column;
+
+    gap: 15px;
+
+    text-align: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar {
+    width: 94%;
+
+    height: 65px;
+
+    padding: 0 12px;
+
+    border-radius: 16px;
+  }
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 10px;
+  }
+
+  .hero {
+    padding-top: 50px;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .trust-card {
+    padding: 14px;
+
+    gap: 15px;
+  }
+
+  .health-preview {
+    padding: 20px;
+
+    border-radius: 22px;
+  }
+
+  .preview-header h2 {
+    font-size: 19px;
+  }
+
+  .service-item {
+    padding: 10px;
+  }
+
+  .service-content h3 {
+    font-size: 12px;
+  }
+
+  .service-content p {
+    font-size: 9px;
+  }
+
+  .features-section,
+  .how-section {
+    padding: 80px 5%;
+  }
+
+  .about-section {
+    padding: 80px 5%;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  .about-card h2 {
+    font-size: 31px;
+  }
 }
