@@ -80,10 +80,10 @@ main {
   align-items: center;
   justify-content: space-between;
 
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
 
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.01);
 
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
@@ -182,7 +182,7 @@ main {
 /* LOGIN */
 
 .login-btn {
-  padding: 11px 20px;
+  padding: 8px 16px;
 
   border-radius: 12px;
 
@@ -206,7 +206,7 @@ main {
 /* NAVBAR GET STARTED */
 
 .primary-btn {
-  padding: 13px 22px;
+  padding: 8px 10px;
 
   border-radius: 12px;
 
@@ -831,7 +831,7 @@ main {
 .service-content h3 {
   color: #263a54;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 650;
 
   margin-bottom: 3px;
@@ -840,13 +840,13 @@ main {
 .service-content p {
   color: #8291a2;
 
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .arrow {
   color: #8495a6;
 
-  font-size: 17px;
+  font-size: 1px;
 
   transition: 0.2s ease;
 }
@@ -1015,10 +1015,12 @@ main {
 .feature-card p {
   color: #7b8a9c;
 
-  font-size: 13px;
+  font-size: 16px;
 
   line-height: 1.7;
 }
+
+
 
 /* =========================================
    HOW IT WORKS
@@ -1026,76 +1028,69 @@ main {
 
 .how-section {
   padding: 120px 7%;
-
   background: transparent;
 }
 
 .steps {
-  max-width: 1050px;
-
+  max-width: 1250px;
   margin: auto;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 }
 
+/* Individual step */
 .step {
-  width: 280px;
-
+  width: 340px;
+  min-height: 230px;
+  padding: 32px 25px;
   text-align: center;
 }
 
+/* 01, 02, 03 boxes */
 .step-number {
-  width: 58px;
-  height: 58px;
+  width: 72px;
+  height: 72px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  margin: 0 auto 17px;
+  margin: 0 auto 24px;
 
-  border-radius: 18px;
+  border-radius: 20px;
 
   color: #0b9697;
-
   background: white;
-
   border: 1px solid #dcecee;
 
-  box-shadow:
-    0 10px 25px rgba(30, 110, 120, 0.08);
+  box-shadow: 0 10px 25px rgba(30, 110, 120, 0.08);
 
+  font-size: 20px;
   font-weight: 800;
 }
 
+/* Create your account / Manage your health */
 .step h3 {
   color: #203751;
-
-  font-size: 16px;
-
-  margin-bottom: 8px;
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
+/* Description */
 .step p {
   color: #7c8c9d;
-
-  font-size: 13px;
-
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
+/* Connecting lines */
 .step-line {
-  width: 90px;
+  width: 110px;
   height: 1px;
-
   background: #cde2e5;
-
-  margin-bottom: 75px;
+  margin-bottom: 90px;
 }
 
 /* =========================================
@@ -1103,26 +1098,23 @@ main {
 ========================================= */
 
 .about-section {
-  padding: 110px 7%;
-
+  padding: 130px 7%;
   background: transparent;
 }
 
 .about-card {
-  max-width: 1150px;
-
+  max-width: 1250px;
   margin: auto;
 
-  padding: 55px;
+  padding: 70px 65px;
 
   display: flex;
-
   align-items: center;
   justify-content: space-between;
 
-  gap: 60px;
+  gap: 80px;
 
-  border-radius: 28px;
+  border-radius: 32px;
 
   background:
     radial-gradient(
@@ -1139,40 +1131,44 @@ main {
   border: 1px solid #dfeef0;
 }
 
+/* ABOUT HEADING */
 .about-card h2 {
   color: #142a44;
 
-  font-size: 40px;
+  font-size: 48px;
+  line-height: 1.12;
 
-  line-height: 1.1;
+  letter-spacing: -1.8px;
 
-  letter-spacing: -1.5px;
-
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .about-card h2 span {
   color: #12999a;
 }
 
+/* ABOUT DESCRIPTION */
 .about-card p {
-  max-width: 650px;
+  max-width: 720px;
 
   color: #718297;
 
-  font-size: 14px;
-
+  font-size: 17px;
   line-height: 1.8;
 }
 
-.about-stat {
-  min-width: 200px;
+/* =========================================
+   ABOUT STAT BOX
+========================================= */
 
-  padding: 28px;
+.about-stat {
+  min-width: 230px;
+
+  padding: 40px 30px;
 
   text-align: center;
 
-  border-radius: 20px;
+  border-radius: 24px;
 
   background: rgba(255, 255, 255, 0.65);
 
@@ -1187,15 +1183,15 @@ main {
 
   color: #109a9a;
 
-  font-size: 45px;
+  font-size: 52px;
 
-  margin-bottom: 7px;
+  margin-bottom: 10px;
 }
 
 .about-stat span {
   color: #65778c;
 
-  font-size: 12px;
+  font-size: 15px;
 }
 
 /* =========================================
@@ -1203,13 +1199,13 @@ main {
 ========================================= */
 
 .disclaimer {
-  max-width: 1050px;
+  max-width: 1150px;
 
-  margin: 0 auto 70px;
+  margin: 0 auto 80px;
 
-  padding: 20px 24px;
+  padding: 28px 35px;
 
-  border-radius: 15px;
+  border-radius: 18px;
 
   background: #fff9f5;
 
@@ -1223,17 +1219,17 @@ main {
 
   color: #8e6046;
 
-  font-size: 12px;
+  font-size: 16px;
 
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .disclaimer p {
   color: #987d6e;
 
-  font-size: 11px;
+  font-size: 14px;
 
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* =========================================
