@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -81,13 +82,13 @@ export default function Home() {
         </div>
 
         <div className="nav-actions">
-          <button className="login-btn">
+          <Link className="login-btn" href="/login">
             Login
-          </button>
+          </Link>
 
-          <button className="primary-btn">
+          <Link className="primary-btn" href="/login">
             Get Started <span>→</span>
-          </button>
+          </Link>
         </div>
       </nav>
 
