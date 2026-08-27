@@ -524,6 +524,26 @@ main {
 .auth-submit:hover {
   transform: translateY(-2px);
 }
+/* Error message */
+.auth-error {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff0f0;
+  color: #d93025;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* Success message */
+.auth-success {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #e8f8f5;
+  color: #087f75;
+  font-size: 14px;
+  font-weight: 600;
+}
 
 .auth-switch {
   margin-top: 24px;
