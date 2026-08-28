@@ -42,7 +42,6 @@ Users can search for medicines and view details such as:
 - Dosage
 - Warnings
 - Side effects
-- Pregnancy and breastfeeding information
 - Storage information
 
 The API is accessed through a Next.js API route so that the API key is kept on the server side.
