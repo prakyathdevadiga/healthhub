@@ -7,10 +7,15 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const medicineName = searchParams.get("name");
 
-    if (!medicineName || medicineName.trim().length === 0) {
+    // -----------------------------
+    // Validate search input
+    // -----------------------------
+    if (!medicineName || !medicineName.trim()) {
       return NextResponse.json(
         {
-          error: "Please provide a medicine name.",
+          success: false,
+          error: "Please enter a medicine name.",
+          results: [],
         },
         { status: 400 }
       );
@@ -18,57 +23,131 @@ export async function GET(request: NextRequest) {
 
     const name = medicineName.trim();
 
-    // Search generic name first
-    const genericSearch = encodeURIComponent(
-      `openfda.generic_name:"${name}"`
-    );
+    // -----------------------------
+    // FDA API key
+    // -----------------------------
+    const apiKey = process.env.OPENFDA_API_KEY;
 
-    let response = await fetch(
-      `${FDA_API_URL}?search=${genericSearch}&limit=10`,
-      {
-        cache: "no-store",
-      }
-    );
+    if (!apiKey) {
+      console.error("OPENFDA_API_KEY is missing.");
 
-    // If generic name doesn't return results,
-    // search brand name.
-    if (!response.ok) {
-      const brandSearch = encodeURIComponent(
-        `openfda.brand_name:"${name}"`
-      );
-
-      response = await fetch(
-        `${FDA_API_URL}?search=${brandSearch}&limit=10`,
+      return NextResponse.json(
         {
-          cache: "no-store",
-        }
+          success: false,
+          error: "FDA API configuration is missing.",
+          results: [],
+        },
+        { status: 500 }
       );
     }
 
-    if (!response.ok) {
+    // -----------------------------
+    // Search generic OR brand name
+    // -----------------------------
+    const searchQuery =
+      `openfda.generic_name:"${name}" OR ` +
+      `openfda.brand_name:"${name}"`;
+
+    const url = new URL(FDA_API_URL);
+
+    url.searchParams.set("search", searchQuery);
+    url.searchParams.set("limit", "10");
+    url.searchParams.set("api_key", apiKey);
+
+    // -----------------------------
+    // Call openFDA
+    // -----------------------------
+    const response = await fetch(url.toString(), {
+      cache: "no-store",
+    });
+
+    // -----------------------------
+    // No medicine found
+    // -----------------------------
+    if (response.status === 404) {
       return NextResponse.json(
         {
-          error: "Medicine not found.",
+          success: false,
+          error: `No medicine information found for "${name}".`,
           results: [],
         },
         { status: 404 }
       );
     }
 
+    // -----------------------------
+    // Rate limit
+    // -----------------------------
+    if (response.status === 429) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "FDA API request limit reached. Please try again later.",
+          results: [],
+        },
+        { status: 429 }
+      );
+    }
+
+    // -----------------------------
+    // Other FDA API errors
+    // -----------------------------
+    if (!response.ok) {
+      console.error(
+        "openFDA error:",
+        response.status,
+        response.statusText
+      );
+
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Unable to retrieve medicine information from the FDA.",
+          results: [],
+        },
+        { status: response.status }
+      );
+    }
+
     const data = await response.json();
 
-    const results = data.results || [];
+    // -----------------------------
+    // Extract results
+    // -----------------------------
+    const results = Array.isArray(data.results)
+      ? data.results
+      : [];
 
-    // Convert FDA's large response into
-    // clean data for our frontend.
+    if (results.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `No medicine information found for "${name}".`,
+          results: [],
+        },
+        { status: 404 }
+      );
+    }
+
+    // -----------------------------
+    // Clean FDA response
+    // -----------------------------
     const medicines = results.map((medicine: any) => ({
-      id: medicine.id,
+      id:
+        medicine.id ||
+        medicine.set_id ||
+        medicine.openfda?.spl_id?.[0] ||
+        Math.random().toString(36),
 
       brandName:
-        medicine.openfda?.brand_name?.[0] || "Not available",
+        medicine.openfda?.brand_name?.[0] ||
+        "Not available",
 
       genericName:
-        medicine.openfda?.generic_name?.[0] || "Not available",
+        medicine.openfda?.generic_name?.[0] ||
+        "Not available",
 
       manufacturer:
         medicine.openfda?.manufacturer_name?.[0] ||
@@ -84,6 +163,7 @@ export async function GET(request: NextRequest) {
 
       activeIngredient:
         medicine.active_ingredient?.[0] ||
+        medicine.openfda?.substance_name?.[0] ||
         "Not available",
 
       purpose:
@@ -119,17 +199,23 @@ export async function GET(request: NextRequest) {
         "Information not available",
     }));
 
+    // -----------------------------
+    // Return data to frontend
+    // -----------------------------
     return NextResponse.json({
       success: true,
       count: medicines.length,
       results: medicines,
     });
   } catch (error) {
-    console.error("FDA API Error:", error);
+    console.error("Medicine API error:", error);
 
     return NextResponse.json(
       {
-        error: "Something went wrong while fetching medicine information.",
+        success: false,
+        error:
+          "Something went wrong while fetching medicine information.",
+        results: [],
       },
       { status: 500 }
     );

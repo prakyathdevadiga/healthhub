@@ -1,9 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import styles from "./dashboard.module.css";
 
 export default function Dashboard() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <main className={styles.dashboard}>
 
@@ -31,43 +45,66 @@ export default function Dashboard() {
             Dashboard
           </Link>
 
-          <Link href="/dashboard/hospitals" className={styles.navItem}>
+          <Link
+            href="/dashboard/hospitals"
+            className={styles.navItem}
+          >
             <span>+</span>
             Hospitals
           </Link>
 
-          <Link href="/dashboard/medicines" className={styles.navItem}>
+          <Link
+            href="/dashboard/medicines"
+            className={styles.navItem}
+          >
             <span>▣</span>
             Medicines
           </Link>
 
-          <Link href="/dashboard/blood-bank" className={styles.navItem}>
+          <Link
+            href="/dashboard/blood-bank"
+            className={styles.navItem}
+          >
             <span>●</span>
             Blood Bank
           </Link>
 
-          <Link href="/dashboard/symptoms" className={styles.navItem}>
+          <Link
+            href="/dashboard/symptoms"
+            className={styles.navItem}
+          >
             <span>♡</span>
             Health Guidance
           </Link>
 
-          <Link href="/dashboard/profile" className={styles.navItem}>
+          <Link
+            href="/dashboard/profile"
+            className={styles.navItem}
+          >
             <span>♙</span>
             Profile
           </Link>
 
         </nav>
 
-        <button className={styles.logout}>
+        {/* LOGOUT */}
+
+        <button
+          onClick={handleLogout}
+          className={styles.logout}
+        >
           <span>↪</span>
           Logout
         </button>
 
         <div className={styles.sidebarTip}>
           <div className={styles.tipShield}>♥</div>
+
           <div>
             <strong>Stay Healthy</strong>
-            <p>Small steps today for a better tomorrow.</p>
+            <p>
+              Small steps today for a better tomorrow.
+            </p>
           </div>
         </div>
 
@@ -113,7 +150,9 @@ export default function Dashboard() {
               <span>View account</span>
             </div>
 
-            <span className={styles.profileArrow}>→</span>
+            <span className={styles.profileArrow}>
+              →
+            </span>
 
           </Link>
 
@@ -132,7 +171,9 @@ export default function Dashboard() {
 
             <p>EMERGENCY ASSISTANCE</p>
 
-            <h2>Need urgent medical help?</h2>
+            <h2>
+              Need urgent medical help?
+            </h2>
 
             <span>
               Quickly find nearby hospitals and emergency healthcare
@@ -158,11 +199,15 @@ export default function Dashboard() {
           <div className={styles.sectionHeader}>
 
             <div>
+
               <p className={styles.sectionLabel}>
                 QUICK ACCESS
               </p>
 
-              <h2>Healthcare Services</h2>
+              <h2>
+                Healthcare Services
+              </h2>
+
             </div>
 
             <span className={styles.serviceCount}>
@@ -174,116 +219,194 @@ export default function Dashboard() {
 
           <div className={styles.serviceGrid}>
 
+            {/* Medicine */}
+
             <Link
               href="/dashboard/medicines"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.blue}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.blue}`}
+              >
                 +
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Medicine Information</h3>
-                <p>Find trusted information about medicines.</p>
+
+                <h3>
+                  Medicine Information
+                </h3>
+
+                <p>
+                  Find trusted information about medicines.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
+
+            {/* Prescription */}
 
             <Link
               href="/dashboard/prescriptions"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.purple}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.purple}`}
+              >
                 ▤
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Prescription Management</h3>
-                <p>Keep your prescriptions organized.</p>
+
+                <h3>
+                  Prescription Management
+                </h3>
+
+                <p>
+                  Keep your prescriptions organized.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
+
+            {/* Reminders */}
 
             <Link
               href="/dashboard/reminders"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.orange}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.orange}`}
+              >
                 ◷
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Medication Reminders</h3>
-                <p>Never miss your medication.</p>
+
+                <h3>
+                  Medication Reminders
+                </h3>
+
+                <p>
+                  Never miss your medication.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
+
+            {/* Hospitals */}
 
             <Link
               href="/dashboard/hospitals"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.green}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.green}`}
+              >
                 ●
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Nearby Healthcare</h3>
-                <p>Find hospitals and pharmacies near you.</p>
+
+                <h3>
+                  Nearby Healthcare
+                </h3>
+
+                <p>
+                  Find hospitals and pharmacies near you.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
+
+            {/* Blood Bank */}
 
             <Link
               href="/dashboard/blood-bank"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.red}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.red}`}
+              >
                 ●
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Blood Donor Finder</h3>
-                <p>Connect with nearby blood donors.</p>
+
+                <h3>
+                  Blood Donor Finder
+                </h3>
+
+                <p>
+                  Connect with nearby blood donors.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
+
+            {/* Emergency */}
 
             <Link
               href="/dashboard/hospitals"
               className={styles.serviceCard}
             >
 
-              <div className={`${styles.serviceIcon} ${styles.emergencySmall}`}>
+              <div
+                className={`${styles.serviceIcon} ${styles.emergencySmall}`}
+              >
                 !
               </div>
 
               <div className={styles.serviceInfo}>
-                <h3>Emergency Assistance</h3>
-                <p>Quick access to emergency facilities.</p>
+
+                <h3>
+                  Emergency Assistance
+                </h3>
+
+                <p>
+                  Quick access to emergency facilities.
+                </p>
+
               </div>
 
-              <span className={styles.arrow}>→</span>
+              <span className={styles.arrow}>
+                →
+              </span>
 
             </Link>
 
@@ -295,6 +418,8 @@ export default function Dashboard() {
         {/* ================= BOTTOM ================= */}
 
         <section className={styles.bottomGrid}>
+
+          {/* Health Tip */}
 
           <div className={styles.healthTip}>
 
@@ -322,6 +447,8 @@ export default function Dashboard() {
           </div>
 
 
+          {/* Profile */}
+
           <div className={styles.profileCard}>
 
             <div className={styles.profileCardTop}>
@@ -331,11 +458,15 @@ export default function Dashboard() {
               </div>
 
               <div>
+
                 <p className={styles.sectionLabel}>
                   YOUR HEALTH PROFILE
                 </p>
 
-                <h3>Health Profile</h3>
+                <h3>
+                  Health Profile
+                </h3>
+
               </div>
 
             </div>
