@@ -86,7 +86,7 @@ export default function Home() {
             Login
           </Link>
 
-          <Link className="primary-btn" href="/login">
+          <Link className="primary-btn" href="/signup">
             Get Started <span>→</span>
           </Link>
         </div>

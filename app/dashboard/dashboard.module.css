@@ -9,7 +9,7 @@
 
   display: flex;
 
-  overflow: hidden;
+  overflow-x: hidden;
 
   background:
     radial-gradient(
@@ -92,19 +92,19 @@
 ========================================= */
 
 .sidebar {
-  position: relative;
-  z-index: 5;
+  position: fixed;
+  left: 0;
+  top: 0;
 
   width: 245px;
-
-  min-height: 100vh;
-
-  flex-shrink: 0;
+  height: 100vh;
 
   padding: 30px 18px;
 
   display: flex;
   flex-direction: column;
+
+  box-sizing: border-box;
 
   background: rgba(255, 255, 255, 0.68);
 
@@ -113,8 +113,7 @@
 
   border-right: 1px solid rgba(255, 255, 255, 0.8);
 
-  box-shadow:
-    5px 0 30px rgba(47, 121, 114, 0.05);
+  z-index: 10;
 }
 
 
@@ -125,7 +124,7 @@
 
   color: #147e76;
 
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 700;
 
   letter-spacing: -0.5px;
@@ -159,7 +158,7 @@
 
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
 
   transition:
@@ -222,7 +221,7 @@
 
   color: #cf5b5b;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
 
   cursor: pointer;
@@ -274,7 +273,7 @@
 
   color: #147e76;
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .sidebarTip p {
@@ -282,7 +281,7 @@
 
   color: #78908f;
 
-  font-size: 9px;
+  font-size: 11px;
 
   line-height: 1.4;
 }
@@ -293,14 +292,13 @@
 ========================================= */
 
 .main {
-  position: relative;
-  z-index: 2;
+  margin-left: 245px;
 
-  flex: 1;
-
-  min-width: 0;
+  min-height: 100vh;
 
   padding: 42px 5% 45px;
+
+  box-sizing: border-box;
 
   overflow-y: auto;
 }
@@ -334,7 +332,7 @@
 .header h1 {
   margin: 0;
 
-  font-size: 35px;
+  font-size: 42px;
   font-weight: 650;
 
   letter-spacing: -1.2px;
@@ -352,7 +350,7 @@
 
   color: #718187;
 
-  font-size: 14px;
+  font-size: 16px;
 }
 
 
@@ -420,13 +418,13 @@
 }
 
 .profileText strong {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .profileText span {
   color: #859398;
 
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .profileArrow {
@@ -505,7 +503,7 @@
 
   color: #d55853;
 
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
 
   letter-spacing: 1.6px;
@@ -514,13 +512,13 @@
 .emergencyContent h2 {
   margin: 0 0 5px;
 
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .emergencyContent span {
   color: #7e7778;
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .emergencyButton {
@@ -539,7 +537,7 @@
 
   text-decoration: none;
 
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 700;
 
   box-shadow:
@@ -570,7 +568,7 @@
 
   color: #13857c;
 
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
 
   letter-spacing: 1.7px;
@@ -579,7 +577,7 @@
 .sectionHeader h2 {
   margin: 0;
 
-  font-size: 21px;
+  font-size: 25px;
   font-weight: 600;
 }
 
@@ -594,7 +592,7 @@
 
   color: #718187;
 
-  font-size: 10px;
+  font-size: 12px;
 
   backdrop-filter: blur(12px);
 }
@@ -755,7 +753,7 @@
 
   color: #829095;
 
-  font-size: 10.5px;
+  font-size: 13px;
 
   line-height: 1.5;
 }
@@ -860,7 +858,7 @@
 
   margin: 0 0 9px;
 
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 600;
 
   line-height: 1.3;
@@ -873,7 +871,7 @@
 
   color: rgba(255, 255, 255, 0.82);
 
-  font-size: 11px;
+  font-size: 13px;
 
   line-height: 1.6;
 }
@@ -946,7 +944,7 @@
 .profileCard h3 {
   margin: 0;
 
-  font-size: 17px;
+  font-size: 19px;
 }
 
 .profileCard > p {
@@ -1059,7 +1057,7 @@
   .logo {
     padding: 0 3px 12px;
 
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .navigation {
@@ -1148,7 +1146,7 @@
   }
 
   .header h1 {
-    font-size: 24px;
+    font-size: 28px;
 
     line-height: 1.25;
   }
@@ -1158,7 +1156,7 @@
 
     margin-top: 7px;
 
-    font-size: 11px;
+    font-size: 13px;
 
     line-height: 1.5;
   }
@@ -1202,17 +1200,17 @@
   }
 
   .emergencyContent p {
-    font-size: 7px;
+    font-size: 9px;
 
     letter-spacing: 1px;
   }
 
   .emergencyContent h2 {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .emergencyContent span {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .emergencyButton {
@@ -1227,17 +1225,17 @@
   }
 
   .sectionHeader h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .sectionLabel {
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .serviceCount {
     padding: 6px 9px;
 
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .serviceGrid {
@@ -1268,11 +1266,11 @@
   .serviceInfo h3 {
     margin-bottom: 3px;
 
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .serviceInfo p {
-    font-size: 9.5px;
+    font-size: 11px;
   }
 
   .arrow {
@@ -1299,7 +1297,7 @@
   .healthTip h2 {
     max-width: 290px;
 
-    font-size: 17px;
+    font-size: 19px;
   }
 
   .healthTip > div:first-child > p:last-child {

@@ -2,6 +2,7 @@
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+
   background:
     linear-gradient(
       135deg,
@@ -9,6 +10,7 @@
       #f7f9fc 45%,
       #f3f7fb 100%
     );
+
   color: #102a2e;
 }
 
@@ -59,7 +61,7 @@
 
 .eyebrow {
   display: block;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 3px;
   color: #15877e;
@@ -81,7 +83,7 @@
 .header p {
   margin: 15px 0 0;
   color: #71858b;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .headerIcon {
@@ -163,7 +165,7 @@
   background: transparent;
 
   font-family: inherit;
-  font-size: 15px;
+  font-size: 17px;
   color: #173237;
 }
 
@@ -184,7 +186,7 @@
 
   color: white;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
 
   cursor: pointer;
 
@@ -216,7 +218,7 @@
 
   margin-top: 15px;
 
-  font-size: 12px;
+  font-size: 13px;
   color: #84979c;
 }
 
@@ -228,6 +230,8 @@
 
   border-radius: 30px;
   padding: 7px 13px;
+
+  font-size: 13px;
 
   cursor: pointer;
 
@@ -250,6 +254,7 @@
   align-items: center;
 
   color: #71858b;
+  font-size: 15px;
 }
 
 .spinner {
@@ -305,11 +310,12 @@
 .error strong {
   display: block;
   margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .error p {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   color: #986969;
 }
 
@@ -334,7 +340,7 @@
 }
 
 .resultCount {
-  font-size: 12px;
+  font-size: 13px;
   color: #819498;
 }
 
@@ -389,7 +395,7 @@
 }
 
 .medicineTitle span {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 2px;
   color: #188b83;
@@ -405,7 +411,7 @@
 .medicineTitle p {
   margin: 0;
   color: #7c9095;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Info grid */
@@ -432,7 +438,7 @@
 .infoItem span {
   display: block;
 
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
 
@@ -444,7 +450,7 @@
 .infoItem strong {
   display: block;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 
   color: #385157;
@@ -464,7 +470,8 @@
   gap: 8px;
   align-items: center;
 
-  font-size: 15px;
+  /* INCREASED ONLY FONT */
+  font-size: 20px;
 }
 
 .contentSection h4 span {
@@ -476,8 +483,9 @@
 
   color: #6e8287;
 
-  font-size: 13px;
-  line-height: 1.7;
+  /* INCREASED ONLY FONT */
+  font-size: 18px;
+  line-height: 1.8;
 }
 
 /* Warning */
@@ -515,7 +523,9 @@
 .warning h4 {
   margin: 0 0 6px;
 
-  font-size: 14px;
+  /* INCREASED ONLY FONT */
+  font-size: 20px;
+
   color: #934c45;
 }
 
@@ -524,8 +534,9 @@
 
   color: #8d706c;
 
-  font-size: 12px;
-  line-height: 1.65;
+  /* INCREASED ONLY FONT */
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 /* More details */
@@ -547,7 +558,7 @@
 
   color: #267f79;
 
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -589,7 +600,7 @@
 
   color: #71858a;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.65;
 }
 
@@ -643,7 +654,7 @@
 
   color: #829398;
 
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -672,7 +683,7 @@
 
   color: #718489;
 
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
@@ -722,7 +733,7 @@
   }
 
   .header p {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
   }
 
@@ -739,16 +750,22 @@
     height: 52px;
   }
 
+  .searchBox input {
+    font-size: 16px;
+  }
+
   .searchButton {
     height: 50px;
   }
 
   .quickSearch {
     gap: 6px;
+    font-size: 12px;
   }
 
   .quickSearch button {
     padding: 6px 10px;
+    font-size: 12px;
   }
 
   .medicineCard {
@@ -771,8 +788,30 @@
     font-size: 20px;
   }
 
+  .medicineTitle p {
+    font-size: 13px;
+  }
+
   .infoGrid {
     grid-template-columns: 1fr;
+  }
+
+  .contentSection h4 {
+    font-size: 18px;
+  }
+
+  .contentSection p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .warning h4 {
+    font-size: 18px;
+  }
+
+  .warning p {
+    font-size: 15px;
+    line-height: 1.75;
   }
 
   .detailsContent {
