@@ -2,21 +2,32 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { signOut, onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import styles from "./dashboard.module.css";
 
 export default function Dashboard() {
-  const router = useRouter();
+ const router = useRouter();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      router.push("/login");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
+const [user, setUser] = useState<User | null>(null);
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+
+  return () => unsubscribe();
+}, []);
+
+const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    router.push("/login");
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+};
 
   return (
     <main className={styles.dashboard}>
@@ -142,13 +153,20 @@ export default function Dashboard() {
           >
 
             <div className={styles.avatar}>
-              👤
-            </div>
+  {user?.displayName
+    ? user.displayName.trim().charAt(0).toUpperCase()
+    : "U"}
+</div>
 
             <div className={styles.profileText}>
-              <strong>My Profile</strong>
-              <span>View account</span>
-            </div>
+  <strong>
+    {user?.displayName || "HealthHub User"}
+  </strong>
+
+  <span>
+    View profile
+  </span>
+</div>
 
             <span className={styles.profileArrow}>
               →

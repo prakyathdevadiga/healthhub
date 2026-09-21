@@ -84,7 +84,7 @@ main {
   align-items: center;
   justify-content: space-between;
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.01);
   border-radius: 20px;
 
   background: rgba(255, 255, 255, 0.01);
@@ -190,7 +190,7 @@ main {
   align-items: center;
   justify-content: center;
 
-  padding: 11px 20px;
+  padding: 10px 18px;
 
   border-radius: 12px;
 
@@ -220,7 +220,7 @@ main {
   justify-content: center;
   gap: 8px;
 
-  padding: 13px 22px;
+  padding: 10px 18px;
 
   border-radius: 12px;
 
@@ -1874,5 +1874,102 @@ footer > p {
 
   .about-card h2 {
     font-size: 31px;
+  }
+}
+/* ================= MOBILE NAVBAR ================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 17px;
+  }
+
+  /* Hide desktop navigation links */
+  .nav-links {
+    display: none;
+  }
+
+  /* Keep Login and Get Started beside logo */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .login-btn {
+    padding: 9px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .primary-btn {
+    padding: 9px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .primary-btn span {
+    margin-left: 3px;
+  }
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 12px 12px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    width: 29px;
+    height: 29px;
+    font-size: 15px;
+  }
+
+  .nav-actions {
+    gap: 5px;
+  }
+
+  .login-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .primary-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+/* Mobile login layout */
+@media (max-width: 768px) {
+  .auth-brand-panel {
+    display: none;
+  }
+
+  .auth-shell {
+    width: 100%;
+  }
+
+  .auth-form-panel {
+    width: 100%;
   }
 }

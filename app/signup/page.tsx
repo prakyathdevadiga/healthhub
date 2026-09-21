@@ -1,5 +1,5 @@
 "use client";
-
+import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -266,9 +266,7 @@ export default function SignupPage() {
               onClick={handleGoogleSignup}
               disabled={loading}
             >
-              <span className="google-icon">
-                G
-              </span>
+             <FcGoogle size={22} />
 
               Continue with Google
             </button>
