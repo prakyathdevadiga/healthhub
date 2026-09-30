@@ -116,46 +116,7 @@ export default function Home() {
           {/* NO HERO BUTTONS HERE */}
 
           {/* ================= TRUST CARD ================= */}
-          <div className="trust-card">
-
-            <div className="trust-item">
-              <div className="trust-icon">
-                🔒
-              </div>
-
-              <div>
-                <strong>Secure & Private</strong>
-                <p>Your data is protected</p>
-              </div>
-            </div>
-
-            <div className="trust-divider"></div>
-
-            <div className="trust-item">
-              <div className="trust-icon">
-                ♥
-              </div>
-
-              <div>
-                <strong>Healthcare Focused</strong>
-                <p>Built for your well-being</p>
-              </div>
-            </div>
-
-            <div className="trust-divider"></div>
-
-            <div className="trust-item">
-              <div className="trust-icon">
-                ✓
-              </div>
-
-              <div>
-                <strong>Easy to Use</strong>
-                <p>Simple and intuitive</p>
-              </div>
-            </div>
-
-          </div>
+          
         </div>
 
         {/* ================= RIGHT HEALTH CARD ================= */}

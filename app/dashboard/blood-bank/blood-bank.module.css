@@ -861,3 +861,329 @@
     overflow-y: auto;
   }
 }
+/* =========================================================
+   DONOR CARDS - FINAL FORMATTING
+   ========================================================= */
+
+.donorGrid,
+.donorsGrid,
+.donorList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.donorCard,
+.donorItem {
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(190, 229, 223, 0.85);
+  box-shadow: 0 12px 35px rgba(49, 106, 101, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: 0.2s ease;
+}
+
+.donorCard:hover,
+.donorItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(49, 106, 101, 0.14);
+}
+
+/* Donor top section */
+
+.donorHeader,
+.donorCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.donorAvatar {
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #d8f2ed,
+    #bfe6df
+  );
+
+  color: #147e76;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Donor name */
+
+.donorName {
+  margin: 0;
+
+  color: #17252b;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* Available status */
+
+.donorStatus {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 6px;
+
+  color: #218276;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.donorStatus::before {
+  content: "";
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #159287;
+}
+
+/* Donor information */
+
+.donorDetails {
+  display: grid;
+  gap: 12px;
+
+  margin-top: 16px;
+  padding-top: 17px;
+
+  border-top: 1px solid #e0eeeb;
+}
+
+.donorDetail,
+.detailItem {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #52666b;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.donorDetail strong,
+.detailItem strong {
+  color: #1d3035;
+
+  font-weight: 700;
+}
+
+/* Blood group */
+
+.bloodGroup,
+.donorBloodGroup {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 52px;
+
+  padding: 6px 12px;
+
+  border-radius: 9px;
+
+  background: #e0f5f1;
+
+  color: #147e76;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* Available text */
+
+.available,
+.donorAvailable {
+  color: #218276;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MAKE ALL IMPORTANT TEXT BIGGER
+   ========================================================= */
+
+.header h1 {
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.searchHeading h2 {
+  font-size: 21px;
+}
+
+.searchHeading p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.field label,
+.formField label {
+  font-size: 13px;
+}
+
+.field input,
+.field select,
+.formField input,
+.formField select {
+  font-size: 15px;
+  min-height: 46px;
+}
+
+.searchButton {
+  min-height: 46px;
+  font-size: 14px;
+}
+
+.sectionLabel {
+  font-size: 12px;
+}
+
+.sectionHeader h2 {
+  font-size: 25px;
+}
+
+.emptyState h3 {
+  font-size: 20px;
+}
+
+.emptyState p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.emptyButton {
+  font-size: 14px;
+}
+
+.donorBanner p {
+  font-size: 12px;
+}
+
+.donorBanner h2 {
+  font-size: 20px;
+}
+
+.donorBanner span {
+  font-size: 14px;
+}
+
+.donorBanner button {
+  font-size: 14px;
+}
+
+.modalLabel {
+  font-size: 12px;
+}
+
+.modal h2 {
+  font-size: 28px;
+}
+
+.modalDescription {
+  font-size: 14px;
+}
+
+.availabilityBox strong {
+  font-size: 14px;
+}
+
+.availabilityBox p {
+  font-size: 12px;
+}
+
+.registerButton {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.navItem,
+.logout {
+  font-size: 16px;
+}
+
+.sidebarTip strong {
+  font-size: 13px;
+}
+
+.sidebarTip p {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 22px;
+  }
+
+  .donorGrid,
+  .donorsGrid,
+  .donorList {
+    grid-template-columns: 1fr;
+  }
+
+  .donorCard,
+  .donorItem {
+    padding: 20px;
+  }
+
+  .donorName {
+    font-size: 19px;
+  }
+
+  .donorDetail,
+  .detailItem {
+    font-size: 15px;
+  }
+}
