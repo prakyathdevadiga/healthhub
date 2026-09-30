@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   onAuthStateChanged,
@@ -81,97 +80,11 @@ export default function ProfilePage() {
   return (
     <main className={styles.page}>
 
-      {/* ================= SIDEBAR ================= */}
-
-      <aside className={styles.sidebar}>
-
-        <Link href="/dashboard" className={styles.logo}>
-          <span>♥</span>
-          HealthHub
-        </Link>
-
-        <nav className={styles.navigation}>
-
-          <Link
-            href="/dashboard"
-            className={styles.navItem}
-          >
-            <span>⌂</span>
-            Dashboard
-          </Link>
-
-          <Link
-            href="/dashboard/hospitals"
-            className={styles.navItem}
-          >
-            <span>+</span>
-            Hospitals
-          </Link>
-
-          <Link
-            href="/dashboard/medicines"
-            className={styles.navItem}
-          >
-            <span>▣</span>
-            Medicines
-          </Link>
-
-          <Link
-            href="/dashboard/blood-bank"
-            className={styles.navItem}
-          >
-            <span>●</span>
-            Blood Bank
-          </Link>
-
-          <Link
-            href="/dashboard/symptoms"
-            className={styles.navItem}
-          >
-            <span>♡</span>
-            Health Guidance
-          </Link>
-
-          <Link
-            href="/dashboard/profile"
-            className={`${styles.navItem} ${styles.active}`}
-          >
-            <span>♙</span>
-            Profile
-          </Link>
-
-        </nav>
-
-        <Link
-          href="/dashboard"
-          className={styles.logout}
-        >
-          <span>←</span>
-          Back to Dashboard
-        </Link>
-
-        <div className={styles.sidebarTip}>
-          <div className={styles.tipIcon}>
-            ♥
-          </div>
-
-          <div>
-            <strong>Your Health</strong>
-            <p>
-              Keep your information up to date.
-            </p>
-          </div>
-        </div>
-
-      </aside>
-
-
       {/* ================= MAIN ================= */}
 
       <section className={styles.main}>
 
         <header className={styles.header}>
-
           <div>
             <p className={styles.eyebrow}>
               HEALTHHUB ACCOUNT
@@ -185,9 +98,7 @@ export default function ProfilePage() {
               Manage your personal account information.
             </p>
           </div>
-
         </header>
-
 
         {/* ================= PROFILE CARD ================= */}
 
@@ -217,7 +128,6 @@ export default function ProfilePage() {
 
           </div>
 
-
           {/* ================= ACCOUNT INFORMATION ================= */}
 
           <div className={styles.section}>
@@ -231,7 +141,6 @@ export default function ProfilePage() {
                 Firebase Account
               </span>
             </div>
-
 
             <div className={styles.infoGrid}>
 
@@ -262,7 +171,6 @@ export default function ProfilePage() {
 
               </div>
 
-
               <div className={styles.infoBox}>
 
                 <label>
@@ -277,13 +185,11 @@ export default function ProfilePage() {
 
             </div>
 
-
             {message && (
               <p className={styles.message}>
                 {message}
               </p>
             )}
-
 
             <div className={styles.actions}>
 
@@ -329,7 +235,6 @@ export default function ProfilePage() {
             </div>
 
           </div>
-
 
           {/* ================= ACCOUNT NOTE ================= */}
 
