@@ -4,81 +4,94 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-
   const [activeSection, setActiveSection] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-  const sectionIds = ["home", "features", "how-it-works", "about"];
+    const sectionIds = ["home", "features", "how-it-works", "about"];
 
-  const handleScroll = () => {
-    let current = "home";
+    const handleScroll = () => {
+      let current = "home";
 
-    sectionIds.forEach((id) => {
-      const section = document.getElementById(id);
+      sectionIds.forEach((id) => {
+        const section = document.getElementById(id);
 
-      if (section) {
-        const top = section.getBoundingClientRect().top;
+        if (section) {
+          const top = section.getBoundingClientRect().top;
 
-        if (top <= 180) {
-          current = id;
+          if (top <= 180) {
+            current = id;
+          }
         }
-      }
-    });
+      });
 
-    setActiveSection(current);
-  };
+      setActiveSection(current);
+      setIsScrolled(window.scrollY > 80);
+    };
 
-  window.addEventListener("scroll", handleScroll);
-  handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <main>
       {/* ================= NAVBAR ================= */}
-      <nav className="navbar">
-        <div className="logo">
+      <nav className={`navbar ${isScrolled ? "navbar-scrolled" : ""}`}>
+        <a
+          href="#home"
+          className="logo"
+          onClick={(e) => {
+            e.preventDefault();
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
+        >
           <div className="logo-icon">✚</div>
 
           <span>
             Health<span>Hub</span>
           </span>
-        </div>
+        </a>
 
         <div className="nav-links">
           <a
-  href="#home"
-  className={activeSection === "home" ? "active" : ""}
-  onClick={() => setActiveSection("home")}
->
-  Home
-</a>
+            href="#home"
+            className={activeSection === "home" ? "active" : ""}
+            onClick={() => setActiveSection("home")}
+          >
+            Home
+          </a>
 
-<a
-  href="#features"
-  className={activeSection === "features" ? "active" : ""}
-  onClick={() => setActiveSection("features")}
->
-  Features
-</a>
+          <a
+            href="#features"
+            className={activeSection === "features" ? "active" : ""}
+            onClick={() => setActiveSection("features")}
+          >
+            Features
+          </a>
 
-<a
-  href="#how-it-works"
-  className={activeSection === "how-it-works" ? "active" : ""}
-  onClick={() => setActiveSection("how-it-works")}
->
-  How It Works
-</a>
+          <a
+            href="#how-it-works"
+            className={activeSection === "how-it-works" ? "active" : ""}
+            onClick={() => setActiveSection("how-it-works")}
+          >
+            How It Works
+          </a>
 
-<a
-  href="#about"
-  className={activeSection === "about" ? "active" : ""}
-  onClick={() => setActiveSection("about")}
->
-  About Us
-</a>
+          <a
+            href="#about"
+            className={activeSection === "about" ? "active" : ""}
+            onClick={() => setActiveSection("about")}
+          >
+            About Us
+          </a>
         </div>
 
         <div className="nav-actions">
@@ -95,7 +108,6 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="hero" id="home">
         <div className="hero-content">
-
           <div className="hero-badge">
             <span>✦</span>
             Healthcare made simpler
@@ -112,168 +124,106 @@ export default function Home() {
             healthcare facilities, medication reminders and emergency
             assistance together in one simple platform.
           </p>
-
-          {/* NO HERO BUTTONS HERE */}
-
-          {/* ================= TRUST CARD ================= */}
-          
         </div>
 
         {/* ================= RIGHT HEALTH CARD ================= */}
         <div className="hero-visual">
-
-          {/* FLOATING + REMOVED */}
-
           <div className="health-preview">
-
             <div className="preview-header">
-
               <div>
-                <p className="preview-label">
-                  HEALTH HUB
-                </p>
+                <p className="preview-label">HEALTH HUB</p>
 
-                <h2>
-                  Your Health, Simplified
-                </h2>
+                <h2>Your Health, Simplified</h2>
 
                 <p className="preview-subtitle">
                   Everything you need, in one place.
                 </p>
               </div>
 
-              <div className="heart-button">
-                ♥
-              </div>
-
+              <div className="heart-button">♥</div>
             </div>
 
             <div className="service-list">
-
               {/* Medicine */}
               <div className="service-item">
-
-                <div className="service-icon medicine">
-                  +
-                </div>
+                <div className="service-icon medicine">+</div>
 
                 <div className="service-content">
                   <h3>Medicine Information</h3>
                   <p>Find trusted medicine details</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
 
               {/* Prescription */}
               <div className="service-item">
-
-                <div className="service-icon prescription">
-                  ▤
-                </div>
+                <div className="service-icon prescription">▤</div>
 
                 <div className="service-content">
                   <h3>Prescription Management</h3>
                   <p>Keep your prescriptions organized</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
 
               {/* Medication */}
               <div className="service-item">
-
-                <div className="service-icon reminder">
-                  ◷
-                </div>
+                <div className="service-icon reminder">◷</div>
 
                 <div className="service-content">
                   <h3>Medication Reminders</h3>
                   <p>Never miss your medication</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
 
               {/* Healthcare */}
               <div className="service-item">
-
-                <div className="service-icon healthcare">
-                  ●
-                </div>
+                <div className="service-icon healthcare">●</div>
 
                 <div className="service-content">
                   <h3>Nearby Healthcare</h3>
                   <p>Find hospitals and pharmacies</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
 
               {/* Blood Donor */}
               <div className="service-item">
-
-                <div className="service-icon blood">
-                  ●
-                </div>
+                <div className="service-icon blood">●</div>
 
                 <div className="service-content">
                   <h3>Blood Donor Finder</h3>
                   <p>Connect with nearby donors</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
 
               {/* Emergency */}
               <div className="service-item emergency">
-
-                <div className="service-icon emergency-icon">
-                  !
-                </div>
+                <div className="service-icon emergency-icon">!</div>
 
                 <div className="service-content">
                   <h3>Emergency Assistance</h3>
                   <p>Quick access to emergency facilities</p>
                 </div>
 
-                <span className="arrow">
-                  →
-                </span>
-
+                <span className="arrow">→</span>
               </div>
-
             </div>
           </div>
-
-          {/* FLOATING DOTS REMOVED */}
-
         </div>
       </section>
 
       {/* ================= FEATURES ================= */}
       <section className="features-section" id="features">
-
         <div className="section-heading">
-
-          <div className="section-badge">
-            HEALTH HUB FEATURES
-          </div>
+          <div className="section-badge">HEALTH HUB FEATURES</div>
 
           <h2>
             Everything you need for
@@ -284,15 +234,11 @@ export default function Home() {
             Simple tools designed to help you manage healthcare information,
             medications and essential services from one platform.
           </p>
-
         </div>
 
         <div className="feature-grid">
-
           <div className="feature-card">
-            <div className="feature-icon medicine-bg">
-              +
-            </div>
+            <div className="feature-icon medicine-bg">+</div>
 
             <h3>Medicine Information</h3>
 
@@ -303,9 +249,7 @@ export default function Home() {
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon purple-bg">
-              ▤
-            </div>
+            <div className="feature-icon purple-bg">▤</div>
 
             <h3>Prescription Management</h3>
 
@@ -316,9 +260,7 @@ export default function Home() {
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon orange-bg">
-              ◷
-            </div>
+            <div className="feature-icon orange-bg">◷</div>
 
             <h3>Medication Reminders</h3>
 
@@ -329,9 +271,7 @@ export default function Home() {
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon green-bg">
-              ●
-            </div>
+            <div className="feature-icon green-bg">●</div>
 
             <h3>Nearby Healthcare</h3>
 
@@ -342,9 +282,7 @@ export default function Home() {
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon red-bg">
-              ●
-            </div>
+            <div className="feature-icon red-bg">●</div>
 
             <h3>Blood Donor Finder</h3>
 
@@ -354,9 +292,7 @@ export default function Home() {
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon emergency-bg">
-              !
-            </div>
+            <div className="feature-icon emergency-bg">!</div>
 
             <h3>Emergency Assistance</h3>
 
@@ -365,18 +301,13 @@ export default function Home() {
               emergency information.
             </p>
           </div>
-
         </div>
       </section>
 
       {/* ================= HOW IT WORKS ================= */}
       <section className="how-section" id="how-it-works">
-
         <div className="section-heading">
-
-          <div className="section-badge">
-            HOW IT WORKS
-          </div>
+          <div className="section-badge">HOW IT WORKS</div>
 
           <h2>
             Healthcare made
@@ -387,15 +318,11 @@ export default function Home() {
             Health Hub brings multiple healthcare utilities together through
             one easy-to-use platform.
           </p>
-
         </div>
 
         <div className="steps">
-
           <div className="step">
-            <div className="step-number">
-              01
-            </div>
+            <div className="step-number">01</div>
 
             <h3>Create your account</h3>
 
@@ -407,9 +334,7 @@ export default function Home() {
           <div className="step-line"></div>
 
           <div className="step">
-            <div className="step-number">
-              02
-            </div>
+            <div className="step-number">02</div>
 
             <h3>Manage your health</h3>
 
@@ -421,9 +346,7 @@ export default function Home() {
           <div className="step-line"></div>
 
           <div className="step">
-            <div className="step-number">
-              03
-            </div>
+            <div className="step-number">03</div>
 
             <h3>Access healthcare</h3>
 
@@ -431,20 +354,14 @@ export default function Home() {
               Find medicines, healthcare facilities and blood donors.
             </p>
           </div>
-
         </div>
       </section>
 
       {/* ================= ABOUT ================= */}
       <section className="about-section" id="about">
-
         <div className="about-card">
-
           <div>
-
-            <div className="section-badge">
-              ABOUT HEALTH HUB
-            </div>
+            <div className="section-badge">ABOUT HEALTH HUB</div>
 
             <h2>
               One platform.
@@ -457,60 +374,43 @@ export default function Home() {
               healthcare information and everyday medication management
               through a single digital platform.
             </p>
-
           </div>
 
           <div className="about-stat">
             <strong>01</strong>
 
-            <span>
-              Unified Healthcare Platform
-            </span>
+            <span>Unified Healthcare Platform</span>
           </div>
-
         </div>
       </section>
 
       {/* ================= DISCLAIMER ================= */}
       <section className="disclaimer">
-
-        <strong>
-          Medical Information Disclaimer
-        </strong>
+        <strong>Medical Information Disclaimer</strong>
 
         <p>
           Health Hub provides general healthcare information and management
           tools for educational and organizational purposes. It does not
           diagnose medical conditions or replace professional medical advice.
         </p>
-
       </section>
 
       {/* ================= FOOTER ================= */}
       <footer>
-
         <div className="footer-logo">
-
-          <div className="logo-icon">
-            ✚
-          </div>
+          <div className="logo-icon">✚</div>
 
           <span>
             Health<span>Hub</span>
           </span>
-
         </div>
 
-        <p>
-          Smarter healthcare. All in one place.
-        </p>
+        <p>Smarter healthcare. All in one place.</p>
 
         <span className="copyright">
           © 2026 Health Hub. All rights reserved.
         </span>
-
       </footer>
-
     </main>
   );
 }

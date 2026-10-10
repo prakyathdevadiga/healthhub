@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     url.searchParams.set("api_key", apiKey);
 
     // -----------------------------
-    // Call openFDA
+    // Call OpenFDA
     // -----------------------------
     const response = await fetch(url.toString(), {
       cache: "no-store",
@@ -134,73 +134,99 @@ export async function GET(request: NextRequest) {
     // -----------------------------
     // Clean FDA response
     // -----------------------------
-    const medicines = results.map((medicine: any) => ({
-      id:
-        medicine.id ||
-        medicine.set_id ||
-        medicine.openfda?.spl_id?.[0] ||
-        Math.random().toString(36),
-
-      brandName:
-        medicine.openfda?.brand_name?.[0] ||
-        "Not available",
-
-      genericName:
-        medicine.openfda?.generic_name?.[0] ||
-        "Not available",
-
-      manufacturer:
-        medicine.openfda?.manufacturer_name?.[0] ||
-        "Not available",
-
-      productType:
-        medicine.openfda?.product_type?.[0] ||
-        "Not available",
-
-      route:
-        medicine.openfda?.route?.[0] ||
-        "Not available",
-
-      activeIngredient:
-        medicine.active_ingredient?.[0] ||
-        medicine.openfda?.substance_name?.[0] ||
-        "Not available",
-
-      purpose:
-        medicine.purpose?.[0] ||
-        "Information not available",
-
-      indications:
-        medicine.indications_and_usage?.[0] ||
-        "Information not available",
-
-      warnings:
+    const medicines = results.map((medicine: any) => {
+      // --------------------------------
+      // Short warning - maximum 3 sentences
+      // --------------------------------
+      const warningText =
         medicine.warnings?.[0] ||
-        "No warning information available",
+        "Use only as directed.";
 
-      dosage:
-        medicine.dosage_and_administration?.[0] ||
-        "Information not available",
+      const cleanedWarning = warningText
+        .replace(/\s+/g, " ")
+        .trim();
 
-      sideEffects:
-        medicine.adverse_reactions?.[0] ||
-        "Information not available",
+      const warningSentences = cleanedWarning
+        .split(/(?<=[.!?])\s+/)
+        .filter((sentence: string) => sentence.trim());
 
-      pregnancy:
-        medicine.pregnancy_or_breast_feeding?.[0] ||
-        "Information not available",
+      const shortWarning =
+        warningSentences.slice(0, 3).join(" ") ||
+        "Use only as directed.";
 
-      doNotUse:
-        medicine.do_not_use?.[0] ||
-        "Information not available",
+      // --------------------------------
+      // Clean active ingredient
+      // --------------------------------
+      const activeIngredient =
+        medicine.openfda?.substance_name?.[0] ||
+        medicine.active_ingredient?.[0] ||
+        "Not available";
 
-      storage:
-        medicine.storage_and_handling?.[0] ||
-        "Information not available",
-    }));
+      return {
+        id:
+          medicine.id ||
+          medicine.set_id ||
+          medicine.openfda?.spl_id?.[0] ||
+          Math.random().toString(36),
+
+        // -----------------------------
+        // Medicine
+        // -----------------------------
+        brandName:
+          medicine.openfda?.brand_name?.[0] ||
+          medicine.openfda?.generic_name?.[0] ||
+          "Not available",
+
+        // -----------------------------
+        // Generic
+        // -----------------------------
+        genericName:
+          medicine.openfda?.generic_name?.[0] ||
+          "Not available",
+
+        // -----------------------------
+        // Manufacturer
+        // -----------------------------
+        manufacturer:
+          medicine.openfda?.manufacturer_name?.[0] ||
+          "Not available",
+
+        // -----------------------------
+        // More Information
+        // -----------------------------
+        productType:
+          medicine.openfda?.product_type?.[0] ||
+          "Not available",
+
+        route:
+          medicine.openfda?.route?.[0] ||
+          "Not available",
+
+        activeIngredient,
+
+        // -----------------------------
+        // Purpose
+        // -----------------------------
+        purpose:
+          medicine.purpose?.[0] ||
+          "Information not available",
+
+        // -----------------------------
+        // Uses & Indications
+        // -----------------------------
+        indications:
+          medicine.indications_and_usage?.[0] ||
+          "Information not available",
+
+        // -----------------------------
+        // Warning
+        // -----------------------------
+        warnings: shortWarning,
+      };
+    });
 
     // -----------------------------
-    // Return data to frontend
+    // Return data
     // -----------------------------
     return NextResponse.json({
       success: true,

@@ -14,11 +14,6 @@ interface Medicine {
   purpose: string;
   indications: string;
   warnings: string;
-  dosage: string;
-  sideEffects: string;
-  pregnancy: string;
-  doNotUse: string;
-  storage: string;
 }
 
 export default function MedicinesPage() {
@@ -27,6 +22,9 @@ export default function MedicinesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // =============================
+  // SEARCH MEDICINE
+  // =============================
   const searchMedicine = async (name: string) => {
     if (!name.trim()) {
       setError("Please enter a medicine name.");
@@ -52,6 +50,7 @@ export default function MedicinesPage() {
       setMedicines(data.results);
     } catch (err) {
       console.error(err);
+
       setError(
         "Unable to fetch medicine information. Please try again."
       );
@@ -60,11 +59,17 @@ export default function MedicinesPage() {
     }
   };
 
+  // =============================
+  // FORM SUBMIT
+  // =============================
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     searchMedicine(search);
   };
 
+  // =============================
+  // QUICK SEARCH
+  // =============================
   const quickSearch = (name: string) => {
     setSearch(name);
     searchMedicine(name);
@@ -77,7 +82,8 @@ export default function MedicinesPage() {
       <div className={styles.gradientTwo}></div>
 
       <div className={styles.container}>
-        {/* Header */}
+
+        {/* ================= HEADER ================= */}
         <section className={styles.header}>
           <div>
             <span className={styles.eyebrow}>
@@ -94,12 +100,17 @@ export default function MedicinesPage() {
             </p>
           </div>
 
-          <div className={styles.headerIcon}>💊</div>
+          <div className={styles.headerIcon}>
+            💊
+          </div>
         </section>
 
-        {/* Search */}
+        {/* ================= SEARCH ================= */}
         <section className={styles.searchCard}>
-          <form onSubmit={handleSubmit} className={styles.searchForm}>
+          <form
+            onSubmit={handleSubmit}
+            className={styles.searchForm}
+          >
             <div className={styles.searchBox}>
               <span>⌕</span>
 
@@ -123,46 +134,69 @@ export default function MedicinesPage() {
           <div className={styles.quickSearch}>
             <span>Popular:</span>
 
-            <button onClick={() => quickSearch("acetaminophen")}>
+            <button
+              type="button"
+              onClick={() => quickSearch("acetaminophen")}
+            >
               Acetaminophen
             </button>
 
-            <button onClick={() => quickSearch("ibuprofen")}>
+            <button
+              type="button"
+              onClick={() => quickSearch("ibuprofen")}
+            >
               Ibuprofen
             </button>
 
-            <button onClick={() => quickSearch("aspirin")}>
+            <button
+              type="button"
+              onClick={() => quickSearch("aspirin")}
+            >
               Aspirin
             </button>
           </div>
         </section>
 
-        {/* Loading */}
+        {/* ================= LOADING ================= */}
         {loading && (
           <div className={styles.loading}>
             <div className={styles.spinner}></div>
-            <p>Finding medicine information...</p>
+
+            <p>
+              Finding medicine information...
+            </p>
           </div>
         )}
 
-        {/* Error */}
+        {/* ================= ERROR ================= */}
         {!loading && error && (
           <div className={styles.error}>
             <span>!</span>
+
             <div>
-              <strong>Medicine not found</strong>
+              <strong>
+                Medicine not found
+              </strong>
+
               <p>{error}</p>
             </div>
           </div>
         )}
 
-        {/* Results */}
+        {/* ================= RESULTS ================= */}
         {!loading && medicines.length > 0 && (
           <section className={styles.results}>
+
+            {/* Results heading */}
             <div className={styles.sectionHeading}>
               <div>
-                <span className={styles.eyebrow}>FDA RESULTS</span>
-                <h2>Medicine Details</h2>
+                <span className={styles.eyebrow}>
+                  FDA RESULTS
+                </span>
+
+                <h2>
+                  Medicine Details
+                </h2>
               </div>
 
               <span className={styles.resultCount}>
@@ -170,19 +204,23 @@ export default function MedicinesPage() {
               </span>
             </div>
 
+            {/* Medicine cards */}
             {medicines.map((medicine, index) => (
               <article
                 className={styles.medicineCard}
                 key={medicine.id || index}
               >
-                {/* Medicine top */}
+
+                {/* ================= MEDICINE HEADER ================= */}
                 <div className={styles.medicineTop}>
                   <div className={styles.medicineIcon}>
                     💊
                   </div>
 
                   <div className={styles.medicineTitle}>
-                    <span>MEDICINE</span>
+                    <span>
+                      MEDICINE
+                    </span>
 
                     <h3>
                       {medicine.brandName}
@@ -197,120 +235,137 @@ export default function MedicinesPage() {
                   </div>
                 </div>
 
-                {/* Basic information */}
-                <div className={styles.infoGrid}>
-                  <div className={styles.infoItem}>
-                    <span>Manufacturer</span>
-                    <strong>{medicine.manufacturer}</strong>
-                  </div>
-
-                  <div className={styles.infoItem}>
-                    <span>Product Type</span>
-                    <strong>{medicine.productType}</strong>
-                  </div>
-
-                  <div className={styles.infoItem}>
-                    <span>Route</span>
-                    <strong>{medicine.route}</strong>
-                  </div>
-
-                  <div className={styles.infoItem}>
-                    <span>Active Ingredient</span>
-                    <strong>
-                      {medicine.activeIngredient}
-                    </strong>
-                  </div>
-                </div>
-
-                {/* Purpose */}
-                <div className={styles.contentSection}>
+                {/* ================= PURPOSE ================= */}
+                <div className={styles.purposeSection}>
                   <h4>
                     <span>✦</span>
                     Purpose
                   </h4>
 
-                  <p>{medicine.purpose}</p>
+                  <p>
+                    {medicine.purpose}
+                  </p>
                 </div>
 
-                {/* Indications */}
+                {/* ================= USES ================= */}
                 <div className={styles.contentSection}>
                   <h4>
                     <span>✓</span>
                     Uses & Indications
                   </h4>
 
-                  <p>{medicine.indications}</p>
+                  <p>
+                    {medicine.indications}
+                  </p>
                 </div>
 
-                {/* Warning */}
+                {/* ================= WARNING ================= */}
                 <div className={styles.warning}>
-                  <div className={styles.warningIcon}>!</div>
+                  <div className={styles.warningIcon}>
+                    !
+                  </div>
 
-                  <div>
-                    <h4>Important Warnings</h4>
-                    <p>{medicine.warnings}</p>
+                  <div className={styles.warningContent}>
+                    <h4>
+                      Important Warnings
+                    </h4>
+
+                    <p>
+                      {medicine.warnings}
+                    </p>
                   </div>
                 </div>
 
-                {/* Extra details */}
-                <details className={styles.moreDetails}>
+                {/* ================= MORE INFORMATION ================= */}
+                <details className={styles.moreInfo}>
                   <summary>
-                    View more medicine information
-                    <span>+</span>
+                    <span>
+                      More Information
+                    </span>
+
+                    <span className={styles.moreInfoIcon}>
+                      +
+                    </span>
                   </summary>
 
-                  <div className={styles.detailsContent}>
-                    <div>
-                      <h4>Dosage & Administration</h4>
-                      <p>{medicine.dosage}</p>
+                  <div className={styles.infoGrid}>
+
+                    <div className={styles.infoItem}>
+                      <span>
+                        Manufacturer
+                      </span>
+
+                      <strong>
+                        {medicine.manufacturer}
+                      </strong>
                     </div>
 
-                    <div>
-                      <h4>Side Effects</h4>
-                      <p>{medicine.sideEffects}</p>
+                    <div className={styles.infoItem}>
+                      <span>
+                        Product Type
+                      </span>
+
+                      <strong>
+                        {medicine.productType}
+                      </strong>
                     </div>
 
-                    <div>
-                      <h4>Pregnancy & Breastfeeding</h4>
-                      <p>{medicine.pregnancy}</p>
+                    <div className={styles.infoItem}>
+                      <span>
+                        Route
+                      </span>
+
+                      <strong>
+                        {medicine.route}
+                      </strong>
                     </div>
 
-                    <div>
-                      <h4>Do Not Use</h4>
-                      <p>{medicine.doNotUse}</p>
+                    <div className={styles.infoItem}>
+                      <span>
+                        Active Ingredient
+                      </span>
+
+                      <strong>
+                        {medicine.activeIngredient}
+                      </strong>
                     </div>
 
-                    <div>
-                      <h4>Storage</h4>
-                      <p>{medicine.storage}</p>
-                    </div>
                   </div>
                 </details>
+
               </article>
             ))}
           </section>
         )}
 
-        {/* Initial state */}
-        {!loading && !error && medicines.length === 0 && (
-          <section className={styles.emptyState}>
-            <div className={styles.emptyIcon}>💊</div>
+        {/* ================= INITIAL STATE ================= */}
+        {!loading &&
+          !error &&
+          medicines.length === 0 && (
+            <section className={styles.emptyState}>
+              <div className={styles.emptyIcon}>
+                💊
+              </div>
 
-            <h2>Search for a medicine</h2>
+              <h2>
+                Search for a medicine
+              </h2>
 
-            <p>
-              Enter a medicine name above to view available
-              FDA drug information.
-            </p>
-          </section>
-        )}
+              <p>
+                Enter a medicine name above to view
+                available FDA drug information.
+              </p>
+            </section>
+          )}
 
-        {/* Disclaimer */}
+        {/* ================= DISCLAIMER ================= */}
         <div className={styles.disclaimer}>
           <span>ⓘ</span>
 
           <p>
-            <strong>HealthHub Information Notice:</strong>{" "}
+            <strong>
+              HealthHub Information Notice:
+            </strong>{" "}
             Medicine information is provided for educational
             purposes using openFDA data. It should not be used
             as a substitute for professional medical advice,
@@ -318,6 +373,7 @@ export default function MedicinesPage() {
             healthcare professional.
           </p>
         </div>
+
       </div>
     </main>
   );
