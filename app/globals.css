@@ -1973,3 +1973,286 @@ footer > p {
     width: 100%;
   }
 }
+/* =========================================
+   SCROLLING NAVBAR
+========================================= */
+
+.navbar {
+  transition:
+    width 0.45s ease,
+    height 0.45s ease,
+    padding 0.45s ease,
+    border-radius 0.45s ease,
+    top 0.45s ease,
+    box-shadow 0.45s ease,
+    background 0.45s ease,
+    transform 0.45s ease;
+}
+
+.logo {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* =========================================
+   COMPACT NAVBAR AFTER SCROLL
+========================================= */
+
+.navbar.navbar-scrolled {
+  width: 58px;
+  height: 58px;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  justify-content: center;
+
+  top: 18px;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  box-shadow:
+    0 12px 35px rgba(20, 70, 90, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  transition:
+    width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.45s ease,
+    border-radius 0.45s ease,
+    box-shadow 0.45s ease,
+    background 0.45s ease,
+    top 0.45s ease;
+}
+
+/* Hide HealthHub text */
+
+.navbar.navbar-scrolled .logo > span {
+  width: 0;
+  opacity: 0;
+
+  overflow: hidden;
+
+  transform: translateX(-10px);
+
+  transition:
+    width 0.3s ease,
+    opacity 0.2s ease,
+    transform 0.3s ease;
+}
+
+/* Logo */
+
+.navbar.navbar-scrolled .logo {
+  gap: 0;
+
+  transition: gap 0.3s ease;
+}
+
+/* Hide navigation */
+
+.navbar.navbar-scrolled .nav-links {
+  width: 0;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: scale(0.8);
+
+  overflow: hidden;
+
+  transition:
+    width 0.3s ease,
+    opacity 0.2s ease,
+    transform 0.3s ease;
+}
+
+/* Hide Login / Get Started */
+
+.navbar.navbar-scrolled .nav-actions {
+  width: 0;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: scale(0.8);
+
+  overflow: hidden;
+
+  transition:
+    width 0.3s ease,
+    opacity 0.2s ease,
+    transform 0.3s ease;
+}
+
+/* Compact logo icon */
+
+.navbar.navbar-scrolled .logo-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+
+  transition:
+    width 0.35s ease,
+    height 0.35s ease,
+    border-radius 0.35s ease,
+    font-size 0.35s ease;
+}
+
+/* Hover */
+
+.navbar.navbar-scrolled:hover {
+  transform: scale(1.05);
+
+  box-shadow:
+    0 15px 40px rgba(20, 70, 90, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .navbar.navbar-scrolled {
+    width: 52px;
+    height: 52px;
+
+    top: 14px;
+  }
+
+  .navbar.navbar-scrolled .logo-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 16px;
+  }
+}/* =========================================
+   SCROLLING NAVBAR
+========================================= */
+
+.navbar {
+  transition:
+    width 0.4s ease,
+    height 0.4s ease,
+    padding 0.4s ease,
+    border-radius 0.4s ease,
+    top 0.4s ease,
+    left 0.4s ease,
+    box-shadow 0.4s ease,
+    background 0.4s ease;
+}
+
+.logo {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* =========================================
+   COMPACT NAVBAR AFTER SCROLL
+========================================= */
+
+.navbar.navbar-scrolled {
+  width: 58px;
+  height: 58px;
+
+  padding: 0;
+
+  position: fixed;
+
+  left: 28px;
+  top: 20px;
+
+  transform: none;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  box-shadow: 0 10px 30px rgba(20, 70, 90, 0.15);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  z-index: 9999;
+}
+
+/* Hide HealthHub text */
+
+.navbar.navbar-scrolled .logo > span {
+  display: none;
+}
+
+/* Center logo */
+
+.navbar.navbar-scrolled .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* Logo icon */
+
+.navbar.navbar-scrolled .logo-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+}
+
+/* Hide navigation links */
+
+.navbar.navbar-scrolled .nav-links {
+  display: none;
+}
+
+/* Hide login/get started */
+
+.navbar.navbar-scrolled .nav-actions {
+  display: none;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .navbar.navbar-scrolled {
+    width: 52px;
+    height: 52px;
+
+    left: 18px;
+    top: 14px;
+  }
+
+  .navbar.navbar-scrolled .logo-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 16px;
+  }
+}

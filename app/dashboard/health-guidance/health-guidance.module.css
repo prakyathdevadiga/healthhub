@@ -1,0 +1,801 @@
+.page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #f4fbfa;
+  padding: 50px 40px 70px;
+}
+
+.glowOne,
+.glowTwo {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.glowOne {
+  width: 350px;
+  height: 350px;
+  top: -120px;
+  right: -80px;
+  background: rgba(73, 190, 181, 0.12);
+}
+
+.glowTwo {
+  width: 300px;
+  height: 300px;
+  bottom: -100px;
+  left: -100px;
+  background: rgba(93, 170, 220, 0.1);
+}
+
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+
+.eyebrow,
+.resultLabel {
+  display: block;
+  color: #138f89;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 9px;
+}
+
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  font-weight: 750;
+  color: #10272d;
+}
+
+.header h1 span {
+  color: #158f86;
+  font-weight: 750;
+}
+
+
+.header p {
+  margin: 12px 0 0;
+  color: #61777d;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.headerIcon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+
+  background: #dff5f1;
+  color: #138f89;
+
+  font-size: 30px;
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.searchCard {
+  padding: 22px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid #dfeeed;
+  border-radius: 22px;
+
+  box-shadow: 0 15px 40px rgba(40, 90, 100, 0.07);
+}
+
+.searchForm {
+  display: flex;
+  gap: 12px;
+}
+
+.inputBox {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 16px;
+
+  height: 54px;
+
+  border: 1px solid #dbeceb;
+  border-radius: 14px;
+
+  background: #faffff;
+}
+
+.inputBox span {
+  color: #13928b;
+}
+
+.inputBox input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #294c54;
+
+  font-size: 15px;
+}
+
+.inputBox input::placeholder {
+  color: #8da2a7;
+}
+
+.searchButton {
+  height: 54px;
+
+  padding: 0 25px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #138f89;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.searchButton:hover {
+  background: #107d77;
+}
+
+.searchButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.examples {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+
+  margin-top: 14px;
+}
+
+.examples span {
+  color: #71868b;
+  font-size: 12px;
+}
+
+.examples button {
+  border: 1px solid #d9ece9;
+  border-radius: 20px;
+
+  padding: 6px 11px;
+
+  background: #f3fbfa;
+  color: #477b77;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.examples button:hover {
+  background: #e6f5f2;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loadingCard {
+  margin-top: 25px;
+
+  padding: 22px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  background: white;
+
+  border: 1px solid #dfedeb;
+  border-radius: 18px;
+}
+
+.loadingCard strong {
+  color: #31545c;
+  font-size: 15px;
+}
+
+.loadingCard p {
+  margin: 4px 0 0;
+
+  color: #71868d;
+
+  font-size: 14px;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+
+  border: 3px solid #dcefed;
+  border-top-color: #138f89;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.errorCard {
+  margin-top: 25px;
+
+  display: flex;
+
+  gap: 13px;
+
+  padding: 18px;
+
+  border: 1px solid #f1dede;
+
+  background: #fff8f8;
+
+  border-radius: 18px;
+}
+
+.errorIcon {
+  width: 30px;
+  height: 30px;
+
+  min-width: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffe3e3;
+  color: #c96767;
+
+  font-weight: 700;
+}
+
+.errorCard strong {
+  color: #914f4f;
+  font-size: 15px;
+}
+
+.errorCard p {
+  margin: 4px 0 0;
+
+  color: #805f5f;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   RESULT
+========================================= */
+
+.result {
+  margin-top: 30px;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.resultIcon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: #dff5f1;
+  color: #138f89;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.resultHeader h2 {
+  margin: 0;
+
+  color: #214650;
+
+  font-size: 29px;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+.resultLabel {
+  margin-bottom: 4px;
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summaryCard {
+  padding: 22px;
+
+  background: white;
+
+  border: 1px solid #dfedeb;
+
+  border-radius: 18px;
+
+  margin-bottom: 16px;
+}
+
+.summaryCard h3 {
+  margin: 0 0 8px;
+
+  color: #284b54;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.summaryCard p {
+  margin: 0;
+
+  color: #536b72;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   QUICK STEPS
+========================================= */
+
+.stepsCard {
+  padding: 23px;
+
+  background: white;
+
+  border: 1px solid #dfedeb;
+
+  border-radius: 18px;
+
+  margin-bottom: 16px;
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.stepIcon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #e2f6f2;
+  color: #138f89;
+
+  font-weight: 700;
+}
+
+.cardHeading span,
+.helpCard span {
+  display: block;
+
+  color: #5f777d;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 700;
+}
+
+.cardHeading h3 {
+  margin: 2px 0 0;
+
+  color: #284b54;
+
+  font-size: 19px;
+
+  font-weight: 600;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  background: #f7fcfb;
+}
+
+.stepNumber {
+  width: 29px;
+  height: 29px;
+
+  min-width: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d8f1ed;
+  color: #138f89;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.step p {
+  margin: 4px 0 0;
+
+  color: #4d656c;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   MEDICAL HELP
+========================================= */
+
+.helpCard {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 15px;
+
+  padding: 22px;
+
+  background: #fff8f6;
+
+  border: 1px solid #f2e1dd;
+
+  border-radius: 18px;
+
+  margin-bottom: 16px;
+}
+
+.helpIcon {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #ffe6df;
+  color: #c76c58;
+
+  font-weight: 800;
+}
+
+.helpCard h3 {
+  margin: 3px 0 10px;
+
+  color: #704d47;
+
+  font-size: 18px;
+
+  font-weight: 600;
+}
+
+.helpCard ul {
+  margin: 0;
+
+  padding-left: 18px;
+}
+
+.helpCard li {
+  margin-bottom: 7px;
+
+  color: #6f5a56;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   NOTICE
+========================================= */
+
+.notice {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 15px 17px;
+
+  border: 1px solid #dcebea;
+
+  background: #f5fbfa;
+
+  border-radius: 14px;
+}
+
+.notice span {
+  color: #138f89;
+  font-size: 14px;
+}
+
+.notice p {
+  margin: 0;
+
+  color: #61777d;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.emptyState {
+  margin-top: 35px;
+
+  padding: 60px 20px;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  border: 1px dashed #cfe4e1;
+
+  border-radius: 22px;
+}
+
+.emptyIcon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background: #e2f6f2;
+
+  color: #138f89;
+
+  font-size: 27px;
+}
+
+.emptyState h2 {
+  margin: 0;
+
+  color: #31555d;
+
+  font-size: 22px;
+
+  font-weight: 600;
+}
+
+.emptyState p {
+  max-width: 450px;
+
+  margin: 8px auto 0;
+
+  color: #657b81;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .page {
+    padding: 30px 16px 50px;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .header p {
+    max-width: 290px;
+
+    line-height: 1.6;
+  }
+
+  .headerIcon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 16px;
+
+    font-size: 23px;
+  }
+
+  .searchCard {
+    padding: 15px;
+
+    border-radius: 18px;
+  }
+
+  .searchForm {
+    flex-direction: column;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .resultHeader h2 {
+    font-size: 25px;
+  }
+
+  .summaryCard,
+  .stepsCard,
+  .helpCard {
+    padding: 18px;
+  }
+
+  .summaryCard h3 {
+    font-size: 16px;
+  }
+
+  .summaryCard p {
+    font-size: 14px;
+  }
+
+  .cardHeading h3 {
+    font-size: 18px;
+  }
+
+  .step p {
+    font-size: 14px;
+  }
+
+  .helpCard h3 {
+    font-size: 17px;
+  }
+
+  .helpCard li {
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 400px) {
+  .page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .headerIcon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 20px;
+  }
+
+  .inputBox {
+    height: 50px;
+  }
+
+  .searchButton {
+    height: 50px;
+  }
+
+  .resultHeader h2 {
+    font-size: 23px;
+  }
+
+  .summaryCard p {
+    font-size: 14px;
+  }
+
+  .step p {
+    font-size: 14px;
+  }
+}
