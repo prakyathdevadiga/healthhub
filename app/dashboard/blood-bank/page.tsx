@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./blood-bank.module.css";
 
 import { auth } from "@/lib/firebase";
@@ -27,146 +28,127 @@ type Donor = {
   phone: string;
   available: boolean;
   createdAt?: string;
+  distanceKm?: number | null;
+  isExactLocation?: boolean;
 };
 
 export default function BloodBankPage() {
-  /* =========================
-     SEARCH
-  ========================= */
-
+  // SEARCH
   const [bloodGroup, setBloodGroup] = useState("");
   const [city, setCity] = useState("");
 
-  /* =========================
-     DONORS
-  ========================= */
-
+  // DONORS
   const [donors, setDonors] = useState<Donor[]>([]);
   const [loadingDonors, setLoadingDonors] = useState(true);
+  const [searchError, setSearchError] = useState("");
 
-  /* =========================
-     DONOR FORM
-  ========================= */
-
+  // DONOR REGISTRATION MODAL
   const [showForm, setShowForm] = useState(false);
+  const [registering, setRegistering] = useState(false);
 
-  /* =========================
-     FIREBASE USER
-  ========================= */
-
+  // FIREBASE USER
   const [user, setUser] = useState<User | null>(null);
 
-  /* =========================
-     DONOR FORM DATA
-  ========================= */
-
+  // REGISTRATION FORM DATA
   const [donorBloodGroup, setDonorBloodGroup] = useState("");
   const [donorCity, setDonorCity] = useState("");
   const [phone, setPhone] = useState("");
   const [available, setAvailable] = useState(true);
 
-  /* =========================
-     GET CURRENT FIREBASE USER
-  ========================= */
-
+  // CURRENT FIREBASE USER
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-
-      if (currentUser) {
-        console.log("Logged in user:", currentUser.displayName);
-        console.log("Email:", currentUser.email);
-        console.log("UID:", currentUser.uid);
-      }
     });
 
     return () => unsubscribe();
   }, []);
 
-  /* =========================
-     FETCH DONORS FROM MONGODB
-  ========================= */
+  // FETCH DONORS FROM THE API
+  const fetchDonors = useCallback(
+    async (searchBloodGroup = "", searchCity = "") => {
+      try {
+        setLoadingDonors(true);
+        setSearchError("");
 
-  const fetchDonors = async () => {
-    try {
-      setLoadingDonors(true);
+        const params = new URLSearchParams();
 
-      const response = await fetch("/api/donors", {
-        method: "GET",
-        cache: "no-store",
-      });
+        if (searchBloodGroup) {
+          params.set("bloodGroup", searchBloodGroup);
+        }
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch donors");
+        if (searchCity.trim()) {
+          params.set("city", searchCity.trim());
+        }
+
+        const query = params.toString();
+        const url = query ? `/api/donors?${query}` : "/api/donors";
+
+        const response = await fetch(url, {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch donors.");
+        }
+
+        if (!Array.isArray(data)) {
+          throw new Error("The server returned an unexpected response.");
+        }
+
+        setDonors(data);
+      } catch (error) {
+        console.error("Donor fetch error:", error);
+        setDonors([]);
+        setSearchError(
+          error instanceof Error
+            ? error.message
+            : "Unable to load donors. Please try again."
+        );
+      } finally {
+        setLoadingDonors(false);
       }
+    },
+    []
+  );
 
-      const data = await response.json();
-
-      console.log("Donors received from MongoDB:", data);
-
-      setDonors(data);
-    } catch (error) {
-      console.error("Donor fetch error:", error);
-      setDonors([]);
-    } finally {
-      setLoadingDonors(false);
-    }
-  };
-
-  /* =========================
-     LOAD DONORS WHEN PAGE OPENS
-  ========================= */
-
+  // LOAD ALL AVAILABLE DONORS WHEN THE PAGE OPENS
   useEffect(() => {
-    fetchDonors();
-  }, []);
+    void fetchDonors();
+  }, [fetchDonors]);
 
-  /* =========================
-     SEARCH DONORS
-  ========================= */
-
-  const handleSearch = () => {
-    console.log("Searching donors...");
-    console.log("Blood Group:", bloodGroup);
-    console.log("City:", city);
+  // SEARCH DONORS
+  const handleSearch = async () => {
+    await fetchDonors(bloodGroup, city);
   };
 
-  /* =========================
-     FILTER DONORS
-  ========================= */
+  // RESET SEARCH
+  const handleResetSearch = async () => {
+    setBloodGroup("");
+    setCity("");
+    await fetchDonors();
+  };
 
-  const filteredDonors = donors.filter((donor) => {
-    const bloodMatch =
-      !bloodGroup ||
-      donor.bloodGroup.toLowerCase() === bloodGroup.toLowerCase();
+  // API ALREADY APPLIES THE BLOOD GROUP AND LOCATION FILTERS
+  const filteredDonors = donors.filter((donor) => donor.available);
 
-    const cityMatch =
-      !city ||
-      donor.city.toLowerCase().includes(city.toLowerCase());
-
-    return bloodMatch && cityMatch && donor.available;
-  });
-
-  /* =========================
-     OPEN DONOR FORM
-  ========================= */
-
+  // OPEN REGISTRATION MODAL
   const openDonorForm = () => {
-    setShowForm(true);
-
-    if (user) {
-      console.log("Donor:", user.displayName);
-      console.log("Email:", user.email);
+    if (!user) {
+      alert("Please log in before registering as a donor.");
+      return;
     }
+
+    setShowForm(true);
   };
 
-  /* =========================
-     REGISTER DONOR
-  ========================= */
-
+  // REGISTER DONOR
   const handleRegisterDonor = async () => {
     if (!user) {
-      alert("Please login before registering as a donor.");
+      alert("Please log in before registering as a donor.");
       return;
     }
 
@@ -195,9 +177,9 @@ export default function BloodBankPage() {
       available,
     };
 
-    console.log("Sending donor data to MongoDB:", donorData);
-
     try {
+      setRegistering(true);
+
       const response = await fetch("/api/donors", {
         method: "POST",
         headers: {
@@ -213,45 +195,37 @@ export default function BloodBankPage() {
         return;
       }
 
-      console.log("MongoDB response:", data);
-
       alert("Donor registered successfully!");
 
       setShowForm(false);
-
-      /* CLEAR FORM */
-
       setDonorBloodGroup("");
       setDonorCity("");
       setPhone("");
       setAvailable(true);
 
-      /* REFRESH DONORS */
-
-      await fetchDonors();
+      // REFRESH RESULTS USING THE CURRENT SEARCH
+      await fetchDonors(bloodGroup, city);
     } catch (error) {
       console.error("Registration error:", error);
-      alert("Something went wrong while registering.");
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while registering."
+      );
+    } finally {
+      setRegistering(false);
     }
   };
 
   return (
     <main className={styles.page}>
-      {/* =========================
-          MAIN CONTENT
-          Sidebar comes from
-          app/dashboard/layout.tsx
-      ========================= */}
-
+      {/* MAIN CONTENT - SIDEBAR COMES FROM DASHBOARD LAYOUT */}
       <section className={styles.main}>
-
         {/* HEADER */}
-
         <header className={styles.header}>
           <div>
-            <p className={styles.eyebrow}>
-              HEALTHHUB BLOOD BANK
-            </p>
+            <p className={styles.eyebrow}>HEALTHHUB BLOOD BANK</p>
 
             <h1>
               Find a <span>Blood Donor.</span>
@@ -263,39 +237,36 @@ export default function BloodBankPage() {
           </div>
         </header>
 
-        {/* =========================
-            SEARCH
-        ========================= */}
-
+        {/* SEARCH */}
         <section className={styles.searchCard}>
           <div className={styles.searchHeading}>
-            <div className={styles.searchIcon}>
-              ♥
-            </div>
+            <div className={styles.searchIcon}>♥</div>
 
             <div>
               <h2>Find Blood Donors</h2>
-
               <p>
-                Search for donors based on blood group and location.
+                Search by blood group and location to find nearby donors.
               </p>
             </div>
           </div>
 
-          <div className={styles.filters}>
-
+          <form
+            className={styles.filters}
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleSearch();
+            }}
+          >
             {/* BLOOD GROUP */}
-
             <div className={styles.field}>
-              <label>Blood Group</label>
+              <label htmlFor="searchBloodGroup">Blood Group</label>
 
               <select
+                id="searchBloodGroup"
                 value={bloodGroup}
-                onChange={(e) => setBloodGroup(e.target.value)}
+                onChange={(event) => setBloodGroup(event.target.value)}
               >
-                <option value="">
-                  Select blood group
-                </option>
+                <option value="">All blood groups</option>
 
                 {bloodGroups.map((group) => (
                   <option key={group} value={group}>
@@ -305,264 +276,228 @@ export default function BloodBankPage() {
               </select>
             </div>
 
-            {/* CITY */}
-
+            {/* LOCATION */}
             <div className={styles.field}>
-              <label>City / Location</label>
+              <label htmlFor="searchCity">City / Location</label>
 
               <input
+                id="searchCity"
                 type="text"
-                placeholder="Enter your city"
+                placeholder="e.g. Surathkal"
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={(event) => setCity(event.target.value)}
               />
             </div>
 
             {/* SEARCH BUTTON */}
-
             <button
+              type="submit"
               className={styles.searchButton}
-              onClick={handleSearch}
+              disabled={loadingDonors}
             >
-              Search Donors
+              {loadingDonors ? "Searching..." : "Search Donors"}
             </button>
-          </div>
+          </form>
+
+          {(bloodGroup || city) && (
+            <button
+              type="button"
+              onClick={() => void handleResetSearch()}
+              disabled={loadingDonors}
+              style={{
+                marginTop: "12px",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              Clear search
+            </button>
+          )}
+
+          {city.trim() && (
+            <p className={styles.subtitle} style={{ marginTop: "12px" }}>
+              Results may include exact location matches and donors within
+              25 km, sorted with exact matches first.
+            </p>
+          )}
         </section>
 
-        {/* =========================
-            DONOR LIST
-        ========================= */}
-
+        {/* DONOR LIST */}
         <section className={styles.donorSection}>
-
           <div className={styles.sectionHeader}>
             <div>
-              <p className={styles.sectionLabel}>
-                BLOOD DONORS
-              </p>
-
-              <h2>
-                Available Donors
-              </h2>
+              <p className={styles.sectionLabel}>BLOOD DONORS</p>
+              <h2>Available Donors</h2>
             </div>
           </div>
 
           {/* LOADING */}
-
           {loadingDonors ? (
             <div className={styles.emptyState}>
-
-              <div className={styles.emptyIcon}>
-                ♥
-              </div>
-
-              <h3>
-                Loading donors...
-              </h3>
-
-              <p>
-                Please wait while we fetch available blood donors.
-              </p>
-
+              <div className={styles.emptyIcon}>♥</div>
+              <h3>Loading donors...</h3>
+              <p>Please wait while we fetch available blood donors.</p>
             </div>
-
-          ) : filteredDonors.length === 0 ? (
-
-            /* NO DONORS */
-
+          ) : searchError ? (
+            /* ERROR */
             <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>!</div>
+              <h3>Unable to load donors</h3>
+              <p>{searchError}</p>
 
-              <div className={styles.emptyIcon}>
-                ♥
-              </div>
-
-              <h3>
-                No donors found
-              </h3>
-
+              <button
+                type="button"
+                className={styles.emptyButton}
+                onClick={() => void fetchDonors(bloodGroup, city)}
+              >
+                Try Again
+              </button>
+            </div>
+          ) : filteredDonors.length === 0 ? (
+            /* NO DONORS */
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>♥</div>
+              <h3>No donors found</h3>
               <p>
-                There are currently no available donors
-                matching your search.
+                There are currently no available donors matching your search.
+                Try another location or blood group.
               </p>
 
               <button
+                type="button"
                 className={styles.emptyButton}
                 onClick={openDonorForm}
               >
                 Become a Donor
               </button>
-
             </div>
-
           ) : (
-
             /* DONOR CARDS */
-
             <div className={styles.donorGrid}>
-
               {filteredDonors.map((donor) => (
-
-                <div
-                  key={donor._id}
-                  className={styles.donorCard}
-                >
-
+                <div key={donor._id} className={styles.donorCard}>
                   {/* DONOR HEADER */}
-
                   <div className={styles.donorTop}>
-
                     <div className={styles.donorAvatar}>
-                      {donor.name
-                        .charAt(0)
-                        .toUpperCase()}
+                      {(donor.name || "D").charAt(0).toUpperCase()}
                     </div>
 
                     <div>
-                      <h3>
-                        {donor.name}
-                      </h3>
+                      <h3>{donor.name}</h3>
 
-                      <span
-                        className={
-                          styles.availableBadge
-                        }
-                      >
+                      <span className={styles.availableBadge}>
                         ● Available
                       </span>
                     </div>
-
                   </div>
 
                   {/* DONOR DETAILS */}
-
                   <div className={styles.donorDetails}>
-
                     <div>
-                      <strong>
-                        Blood Group:
-                      </strong>
+                      <strong>Blood Group:</strong>
 
-                      <span
-                        className={
-                          styles.bloodGroupBadge
-                        }
-                      >
+                      <span className={styles.bloodGroupBadge}>
                         {donor.bloodGroup}
                       </span>
                     </div>
 
                     <div>
-                      <strong>
-                        City:
-                      </strong>
-
-                      <span>
-                        {donor.city}
-                      </span>
+                      <strong>City:</strong>
+                      <span>{donor.city}</span>
                     </div>
+
+                    {/* LOCATION MATCH / DISTANCE */}
+                    {donor.isExactLocation && (
+                      <div>
+                        <strong>Location:</strong>
+                        <span>Exact location match</span>
+                      </div>
+                    )}
+
+                    {typeof donor.distanceKm === "number" && (
+                      <div>
+                        <strong>Distance:</strong>
+                        <span>
+                          {donor.distanceKm < 1
+                            ? `${Math.round(donor.distanceKm * 1000)} m away`
+                            : `${donor.distanceKm.toFixed(1)} km away`}
+                        </span>
+                      </div>
+                    )}
 
                     <div>
-                      <strong>
-                        Phone:
-                      </strong>
-
-                      <span>
-                        {donor.phone}
-                      </span>
+                      <strong>Phone:</strong>
+                      <a href={`tel:${donor.phone}`}>{donor.phone}</a>
                     </div>
-
                   </div>
-
                 </div>
-
               ))}
-
             </div>
           )}
         </section>
 
-        {/* =========================
-            BANNER
-        ========================= */}
-
+        {/* DONOR REGISTRATION BANNER */}
         <section className={styles.donorBanner}>
-
-          <div className={styles.bannerIcon}>
-            ♥
-          </div>
+          <div className={styles.bannerIcon}>♥</div>
 
           <div>
-            <p>
-              HELP SOMEONE TODAY
-            </p>
+            <p>HELP SOMEONE TODAY</p>
 
-            <h2>
-              Your blood could save a life.
-            </h2>
+            <h2>Your blood could save a life.</h2>
 
             <span>
-              Register as a donor and help people
-              find you when they need your blood group.
+              Register as a donor and help people find you when they need your
+              blood group.
             </span>
           </div>
 
-          <button onClick={openDonorForm}>
+          <button type="button" onClick={openDonorForm}>
             Register Now →
           </button>
-
         </section>
-
       </section>
 
-      {/* =========================
-          DONOR REGISTRATION MODAL
-      ========================= */}
-
+      {/* DONOR REGISTRATION MODAL */}
       {showForm && (
         <div
           className={styles.modalOverlay}
-          onClick={() => setShowForm(false)}
+          onClick={() => {
+            if (!registering) setShowForm(false);
+          }}
         >
-
           <div
             className={styles.modal}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           >
-
             {/* CLOSE */}
-
             <button
+              type="button"
               className={styles.closeButton}
               onClick={() => setShowForm(false)}
+              disabled={registering}
+              aria-label="Close registration form"
             >
               ×
             </button>
 
-            <p className={styles.modalLabel}>
-              BLOOD DONOR REGISTRATION
-            </p>
+            <p className={styles.modalLabel}>BLOOD DONOR REGISTRATION</p>
 
-            <h2>
-              Become a Donor
-            </h2>
+            <h2>Become a Donor</h2>
 
             <p className={styles.modalDescription}>
-              Register your details to help people find you
-              when they need your blood group.
+              Register your details to help people find you when they need your
+              blood group.
             </p>
 
-            {/* FORM */}
-
             <div className={styles.formGrid}>
-
               {/* NAME */}
-
               <div className={styles.formField}>
-                <label>
-                  Full Name
-                </label>
+                <label htmlFor="donorName">Full Name</label>
 
                 <input
+                  id="donorName"
                   type="text"
                   value={user?.displayName || ""}
                   placeholder="Your name"
@@ -571,27 +506,23 @@ export default function BloodBankPage() {
               </div>
 
               {/* BLOOD GROUP */}
-
               <div className={styles.formField}>
-                <label>
-                  Blood Group
-                </label>
+                <label htmlFor="donorBloodGroup">Blood Group</label>
 
                 <select
+                  id="donorBloodGroup"
                   value={donorBloodGroup}
-                  onChange={(e) =>
-                    setDonorBloodGroup(e.target.value)
+                  onChange={(event) =>
+                    setDonorBloodGroup(event.target.value)
                   }
+                  disabled={registering}
                 >
                   <option value="" disabled>
                     Select blood group
                   </option>
 
                   {bloodGroups.map((group) => (
-                    <option
-                      key={group}
-                      value={group}
-                    >
+                    <option key={group} value={group}>
                       {group}
                     </option>
                   ))}
@@ -599,78 +530,62 @@ export default function BloodBankPage() {
               </div>
 
               {/* CITY */}
-
               <div className={styles.formField}>
-                <label>
-                  City
-                </label>
+                <label htmlFor="donorCity">City</label>
 
                 <input
+                  id="donorCity"
                   type="text"
-                  placeholder="Your city"
+                  placeholder="e.g. Surathkal"
                   value={donorCity}
-                  onChange={(e) =>
-                    setDonorCity(e.target.value)
-                  }
+                  onChange={(event) => setDonorCity(event.target.value)}
+                  disabled={registering}
                 />
               </div>
 
               {/* PHONE */}
-
               <div className={styles.formField}>
-                <label>
-                  Phone Number
-                </label>
+                <label htmlFor="donorPhone">Phone Number</label>
 
                 <input
+                  id="donorPhone"
                   type="tel"
                   placeholder="Your phone number"
                   value={phone}
-                  onChange={(e) =>
-                    setPhone(e.target.value)
-                  }
+                  onChange={(event) => setPhone(event.target.value)}
+                  disabled={registering}
                 />
               </div>
-
             </div>
 
             {/* AVAILABILITY */}
-
             <div className={styles.availabilityBox}>
-
               <div>
-                <strong>
-                  Available to Donate
-                </strong>
-
-                <p>
-                  Allow people to contact you when blood is needed.
-                </p>
+                <strong>Available to Donate</strong>
+                <p>Allow people to contact you when blood is needed.</p>
               </div>
 
               <input
                 type="checkbox"
                 checked={available}
-                onChange={(e) =>
-                  setAvailable(e.target.checked)
-                }
+                onChange={(event) => setAvailable(event.target.checked)}
+                disabled={registering}
+                aria-label="Available to donate"
               />
-
             </div>
 
             {/* REGISTER */}
-
             <button
+              type="button"
               className={styles.registerButton}
-              onClick={handleRegisterDonor}
+              onClick={() => void handleRegisterDonor()}
+              disabled={registering}
             >
-              Register as Donor
+              {registering ? "Registering..." : "Register as Donor"}
             </button>
-
           </div>
         </div>
       )}
-
     </main>
   );
 }

@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAPYi5jGu8VU3AQh_AUnauMphpPi-9UTqQ",
-  authDomain: "healthhub-1cb99.firebaseapp.com",
-  projectId: "healthhub-1cb99",
-  storageBucket: "healthhub-1cb99.firebasestorage.app",
-  messagingSenderId: "190572770680",
-  appId: "1:190572770680:web:eb5f13393a3c4111bec48d",
-  measurementId: "G-F84M31EZ1K",
+  apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FB_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FB_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FB_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FB_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FB_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
