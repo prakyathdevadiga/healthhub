@@ -25,6 +25,7 @@ HealthHub is a web-based healthcare application designed to help users manage th
 | Firebase Authentication | User authentication |
 | MongoDB Atlas | Database management |
 | OpenFDA API | Medicine information |
+| Gemini API | Safety Precautions|
 | Geoapify Places API | Nearby hospital search |
 | Lucide React | Icons |
 | Git and GitHub | Version control and source code management |
