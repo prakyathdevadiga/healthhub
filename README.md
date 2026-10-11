@@ -55,6 +55,8 @@ Database name: `healthhub`
 Collections used:
 - `donors`
 - `prescriptions`
+### 5. Gemini API
+Disease-related safety precautions and health guidance.
 
 ## Project Structure
 
@@ -126,6 +128,8 @@ Create a `.env.local` file in the project's root directory and add the environme
 MONGODB_URI=
 
 GEOAPIFY_API_KEY=
+GEMINI_API_KEY=
+OPENFDA_API_KEY=
 
 NEXT_PUBLIC_FB_API_KEY=
 NEXT_PUBLIC_FB_AUTH_DOMAIN=
